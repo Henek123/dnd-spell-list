@@ -1,5 +1,5 @@
 import React from "react"
-import "./Spell.css"
+import "./styles/Spell.css"
 
 export default function Spell(props){
     

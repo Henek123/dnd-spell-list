@@ -1,7 +1,9 @@
 import React from "react"
 import Spell from "./Spell.jsx";
-import "./Main.css"
-import {useQuery, gql} from "@apollo/client"
+import "./styles/Main.css"
+import {useQuery, gql, useLazyQuery} from "@apollo/client"
+import LevelFilter from "./LevelFilter.jsx"
+import ClassFilter from "./ClassFilter.jsx"
 
 const GET_SPELLS= gql`
 query {
@@ -11,12 +13,18 @@ query {
     }
 `;
 
-export default function Main(){
-    const [spellNames, setSpellNames] = React.useState([]);
+const GET_SPELLS_BY_FILTER= gql`
+    query GetFilteredSpells($class: StringFilter, $level: IntFilter) {
+        spells(limit: 1000, class: $class, level: $level) {
+            index
+  }
+}
 
+`;
+
+export default function Main(){
     const spells = useQuery(GET_SPELLS)
-    
-    
+    const [spellNames, setSpellNames] = React.useState([]);
     React.useEffect(() => {
         if(spells.called === true && spells.loading === false){
             let spellIndex = spells.data.spells.map(item => item.index)
@@ -25,15 +33,34 @@ export default function Main(){
             }
     }, [spells.called, spells.loading])
 
+    const [filteredSpells, filteredSpellsResults] = useLazyQuery(GET_SPELLS_BY_FILTER);
+    const [spellFilter, setSpellFilter] = React.useState(null);
+    React.useEffect(() =>{
+        if(filteredSpellsResults.called === true && filteredSpellsResults.loading === false && filteredSpellsResults.data){
+            let result = filteredSpellsResults.data.spells.map(item => item.index);
+            result.sort()
+            setSpellNames(result);
+        }
+    }, [filteredSpellsResults.called, filteredSpellsResults.data, filteredSpellsResults.loading])
+    React.useEffect(() => {
+        if(typeof spellFilter === "number"){
+            filteredSpells({variables: {"level": spellFilter, "class": null}})
+        } else{
+            filteredSpells({variables: {"class": spellFilter, "level": null}})
+        }
+    }, [spellFilter])
+
+
     const list = spellNames.map(spell => (
         <Spell key={spell} spellName={spell}/>
     ))
-    // console.log(spellNames)
     return(
         <>
         <div className="container">
+            <ClassFilter handleClick={setSpellFilter} />
+            <LevelFilter handleClick={setSpellFilter} />
             {list}
-            <Spell spellName="acid-arrow" />
+            {/* <Spell spellName="acid-arrow" name="Acid Arrow"/> */}
         </div>
         </>
     )
