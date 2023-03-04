@@ -1,16 +1,16 @@
 {
   "files": {
-    "main.css": "/Henek123/dnd-spell-list/static/css/main.ac79f72b.css",
-    "main.js": "/Henek123/dnd-spell-list/static/js/main.e3ecd754.js",
-    "static/js/787.28cb0dcd.chunk.js": "/Henek123/dnd-spell-list/static/js/787.28cb0dcd.chunk.js",
-    "static/media/DnD-Logo.png": "/Henek123/dnd-spell-list/static/media/DnD-Logo.7612646950b7bfa06d6b.png",
-    "index.html": "/Henek123/dnd-spell-list/index.html",
-    "main.ac79f72b.css.map": "/Henek123/dnd-spell-list/static/css/main.ac79f72b.css.map",
-    "main.e3ecd754.js.map": "/Henek123/dnd-spell-list/static/js/main.e3ecd754.js.map",
-    "787.28cb0dcd.chunk.js.map": "/Henek123/dnd-spell-list/static/js/787.28cb0dcd.chunk.js.map"
+    "main.css": "/dnd-spell-list/static/css/main.ac79f72b.css",
+    "main.js": "/dnd-spell-list/static/js/main.d01fc4bf.js",
+    "static/js/787.28cb0dcd.chunk.js": "/dnd-spell-list/static/js/787.28cb0dcd.chunk.js",
+    "static/media/DnD-Logo.png": "/dnd-spell-list/static/media/DnD-Logo.7612646950b7bfa06d6b.png",
+    "index.html": "/dnd-spell-list/index.html",
+    "main.ac79f72b.css.map": "/dnd-spell-list/static/css/main.ac79f72b.css.map",
+    "main.d01fc4bf.js.map": "/dnd-spell-list/static/js/main.d01fc4bf.js.map",
+    "787.28cb0dcd.chunk.js.map": "/dnd-spell-list/static/js/787.28cb0dcd.chunk.js.map"
   },
   "entrypoints": [
     "static/css/main.ac79f72b.css",
-    "static/js/main.e3ecd754.js"
+    "static/js/main.d01fc4bf.js"
   ]
 }
