@@ -1,16 +1,16 @@
 {
   "files": {
-    "main.css": "/dnd-spell-list/static/css/main.ac79f72b.css",
-    "main.js": "/dnd-spell-list/static/js/main.d01fc4bf.js",
+    "main.css": "/dnd-spell-list/static/css/main.d0cfbfba.css",
+    "main.js": "/dnd-spell-list/static/js/main.cae8ef65.js",
     "static/js/787.28cb0dcd.chunk.js": "/dnd-spell-list/static/js/787.28cb0dcd.chunk.js",
     "static/media/DnD-Logo.png": "/dnd-spell-list/static/media/DnD-Logo.7612646950b7bfa06d6b.png",
     "index.html": "/dnd-spell-list/index.html",
-    "main.ac79f72b.css.map": "/dnd-spell-list/static/css/main.ac79f72b.css.map",
-    "main.d01fc4bf.js.map": "/dnd-spell-list/static/js/main.d01fc4bf.js.map",
+    "main.d0cfbfba.css.map": "/dnd-spell-list/static/css/main.d0cfbfba.css.map",
+    "main.cae8ef65.js.map": "/dnd-spell-list/static/js/main.cae8ef65.js.map",
     "787.28cb0dcd.chunk.js.map": "/dnd-spell-list/static/js/787.28cb0dcd.chunk.js.map"
   },
   "entrypoints": [
-    "static/css/main.ac79f72b.css",
-    "static/js/main.d01fc4bf.js"
+    "static/css/main.d0cfbfba.css",
+    "static/js/main.cae8ef65.js"
   ]
 }
