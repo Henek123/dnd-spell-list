@@ -1,0 +1,36 @@
+*{
+    font-family: Verdana, Tahoma, sans-serif
+}
+h2{
+    margin: 0;
+}
+.spell-card{
+    width: 20%;
+    min-width: 300px;
+    background-color: whitesmoke;
+    display: flex;
+    flex-direction: column;
+    padding: 1em;
+    border: solid 1px grey;
+    border-radius: 1em;
+    margin: 2em 0;
+    height: 100%;
+}
+span{
+    font-weight: 600;
+}
+p{
+    margin: 0.125em;
+}
+hr{
+    width: 100%;
+    color: goldenrod;
+    margin-top: -10px;
+}
+.expander{
+    float: right;
+    font-style: normal;
+}
+.expander:hover{
+    cursor: pointer;
+}
