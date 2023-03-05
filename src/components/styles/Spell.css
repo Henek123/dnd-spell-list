@@ -7,14 +7,15 @@ h2{
 .spell-card{
     width: 20%;
     min-width: 300px;
-    background-color: whitesmoke;
+    background-color: rgb(235, 235, 235);
     display: flex;
     flex-direction: column;
     padding: 1em;
-    border: solid 1px grey;
+    border: solid 2px darkslategray;
     border-radius: 1em;
     margin: 2em 0;
     height: 100%;
+    box-shadow: 2px 2px 5px grey;
 }
 span{
     font-weight: 600;

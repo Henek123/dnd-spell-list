@@ -1,13 +1,25 @@
 .header{
-    background-color: bisque;
+    background-color: rgb(50, 59, 76);
     width: 100%;
     height: 80px;
     display: flex;
+    z-index: 10;
+    position: fixed;
+    color: white;
+    box-shadow: 1px 1px 4px black;
 }
 .logo{
     width: 150px;
 }
 h1{
+    text-align: center;
+    width: 100%;
+}
+.return-btn{
+    text-decoration: none;
+    color: white;
     align-self: center;
-    margin-left: 30%;
+    width: 170px;
+    margin-right: 20px;
+    font-weight: 600;
 }

@@ -1,0 +1,17 @@
+.loading-screen{
+    width: 100vw;
+    height: 110vh;
+    z-index: 100;
+    position: fixed;
+    text-align: center;
+    background-color: rgba(0, 0, 0, 0.8);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    top: -80px;
+    z-index: 0;
+}
+h4{
+    font-size: 40px;
+    color: whitesmoke;
+}

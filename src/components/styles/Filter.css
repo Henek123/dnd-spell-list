@@ -1,7 +1,18 @@
-.filter{
+.filter-level,
+.filter-class{
     width: 100%;
     display: flex;
-    justify-content: center;
+    justify-content: space-between;
+    border: solid 2px black;
+    border-radius: 20px;
+    background-color: rgb(235, 235, 235);
+}
+.filter-level{
+    border-bottom: unset;
+    margin-top: 30px;
+}
+.filter-class{
+    border-top: unset;
 }
 button{
     width: 120px;
@@ -10,16 +21,26 @@ button{
     height: 40px;
     font-size: 20px;
     border-radius: 10px;
-    border: 2px solid gray;
-    background-color: whitesmoke;
+    border: 2px solid darkgrey;
+    background-color: rgb(235, 235, 235);
+    box-shadow: 2px 2px 5px grey;
 }
 button:hover{
     color:whitesmoke;
-    background-color: gray;
+    background-color: darkgrey;;
     border: 2px solid black;
 }
 .toggled{
     color:whitesmoke;
-    background-color: gray;
+    background-color: darkgrey;;
     border: 2px solid black;
+}
+.filters{
+    margin-top: 80px;
+}
+.filter-label{
+    font-weight: 600;
+    font-size: 24px;
+    align-self: center;
+    font-family: sans-serif
 }

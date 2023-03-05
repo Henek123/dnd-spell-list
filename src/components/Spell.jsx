@@ -1,21 +1,52 @@
 import React from "react"
 import "./styles/Spell.css"
+import {useQuery, gql, useLazyQuery} from "@apollo/client"
 
 export default function Spell(props){
-    
-    const [spell, setSpell] = React.useState({});
-    const [visibility, setVisibility] = React.useState(false);
 
+    //getting spell by name
+    const GET_SPELL = gql`
+    query GetSpell($name: String) {
+      spells(name: $name){
+        level
+        material
+        range
+        ritual
+        school {
+          name
+        }
+        components
+        classes {
+          name
+        }
+        desc
+        higher_level
+        duration
+        casting_time
+        concentration
+        name
+      }
+    }
+    `
+    const [spell, setSpell] = React.useState({});
+    const spellName = useQuery(GET_SPELL, {variables: {"name": props.nameSpell}})
+    React.useEffect(() =>{
+        if(spellName.called && spellName.loading === false){
+            setSpell(spellName.data.spells[0]);
+        }
+    }, [spellName.called, spellName.loading])
+    
+    //toggling visibility of spell card
+    const [visibility, setVisibility] = React.useState(false);
     function toggle(){
         setVisibility(prevState => !prevState)
     }
+    const style = {
+        marginBottom: visibility ? "1.5em" : "0", 
+        fontStyle: "italic"
+    }
 
-    React.useEffect(() =>{
-        fetch(`https://www.dnd5eapi.co/api/spells/${props.spellName}`)
-            .then(res => res.json())
-            .then(data => setSpell(data))
-    }, [props.spellName])
-
+    //settling level on spell card
     function level(level){
         if(level === 0) return `Cantrip`
         if(level === 1) return `${level}st level`
@@ -24,7 +55,7 @@ export default function Spell(props){
         return `${level}th level`
     }
 
-
+    //setting higer level of a spell
     function getHigerLevel(){
         if(spell.higher_level.length !== 0){
             return (
@@ -37,17 +68,12 @@ export default function Spell(props){
         }
     }
 
-    const style = {
-        marginBottom: visibility ? "1.5em" : "0", 
-        fontStyle: "italic"
-    }
-
     return(
             <div className="spell-card">
                 <h2>{spell.name}</h2>
                 <p style={style}>
                     {level(spell.level) + " "}
-                    {spell.school && spell.school.index.charAt(0).toUpperCase() + spell.school.index.slice(1)}
+                    {spell.school && spell.school.name}
                     <span className="expander" onClick={toggle}>{visibility ? "Shrink" : "Expand"}</span>
                 </p>
                 {visibility && <>
@@ -62,7 +88,7 @@ export default function Spell(props){
                 <p><span>Duration:</span> {spell.duration} {spell.concentration && "Concentration"}</p>
 
                 {spell.classes && <p style={{marginBottom: "1.5em"}}><span>Classes:</span> {spell.classes.map(item => (
-                    item.index.charAt(0).toUpperCase() + item.index.slice(1) + " "
+                    item.name + " "
                     ))}</p>}
 
                 <p>{spell.desc}</p>
