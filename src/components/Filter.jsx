@@ -19,13 +19,15 @@ export default function LevelFilter(props) {
   function filterSpells(){
     let temp = {
       variables: {
-        "level": Number(levelFilter),
+        "level": levelFilter ?  Number(levelFilter) : null,
         "class": classFilter
       }
     }
     props.handleClick(temp)
   }
   function resetFilters(){
+    setLevelFilter(null);
+    setClassFilter(null)
     let temp = {
       variables: {
         "level": null,
