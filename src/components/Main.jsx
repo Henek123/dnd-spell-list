@@ -2,8 +2,7 @@ import React from "react"
 import Spell from "./Spell.jsx";
 import "./styles/Main.css"
 import {useQuery, gql, useLazyQuery} from "@apollo/client"
-import LevelFilter from "./LevelFilter.jsx"
-import ClassFilter from "./ClassFilter.jsx"
+import Filter from "./Filter.jsx"
 
 const GET_SPELLS= gql`
 query {
@@ -42,12 +41,10 @@ export default function Main(){
             setSpellNames(result);
         }
     }, [filteredSpellsResults.called, filteredSpellsResults.data, filteredSpellsResults.loading])
+
     React.useEffect(() => {
-        if(typeof spellFilter === "number"){
-            filteredSpells({variables: {"level": spellFilter, "class": null}})
-        } else{
-            filteredSpells({variables: {"class": spellFilter, "level": null}})
-        }
+      console.log(spellFilter)
+      filteredSpells(spellFilter)
     }, [spellFilter])
 
 
@@ -57,10 +54,8 @@ export default function Main(){
     return(
         <>
         <div className="container">
-            <ClassFilter handleClick={setSpellFilter} />
-            <LevelFilter handleClick={setSpellFilter} />
+            <Filter handleClick={setSpellFilter} />
             {list}
-            {/* <Spell spellName="acid-arrow" name="Acid Arrow"/> */}
         </div>
         </>
     )

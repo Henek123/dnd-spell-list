@@ -43,13 +43,12 @@ export default function Spell(props){
     }
 
     return(
-        <>
-            <div className="spell-card" onClick={toggle}>
+            <div className="spell-card">
                 <h2>{spell.name}</h2>
                 <p style={style}>
                     {level(spell.level) + " "}
                     {spell.school && spell.school.index.charAt(0).toUpperCase() + spell.school.index.slice(1)}
-                    <span className="expander">{visibility ? "Shrink" : "Expand"}</span>
+                    <span className="expander" onClick={toggle}>{visibility ? "Shrink" : "Expand"}</span>
                 </p>
                 {visibility && <>
                 <hr />
@@ -71,6 +70,5 @@ export default function Spell(props){
                 {spell.higher_level && getHigerLevel()}
                 </>}
             </div>
-        </>
     )
 }

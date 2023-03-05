@@ -1,0 +1,25 @@
+.filter{
+    width: 100%;
+    display: flex;
+    justify-content: center;
+}
+button{
+    width: 120px;
+    cursor: pointer;
+    margin: 1em;
+    height: 40px;
+    font-size: 20px;
+    border-radius: 10px;
+    border: 2px solid gray;
+    background-color: whitesmoke;
+}
+button:hover{
+    color:whitesmoke;
+    background-color: gray;
+    border: 2px solid black;
+}
+.toggled{
+    color:whitesmoke;
+    background-color: gray;
+    border: 2px solid black;
+}
