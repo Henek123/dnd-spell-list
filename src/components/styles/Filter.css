@@ -37,6 +37,8 @@ button:hover{
 }
 .filters{
     margin-top: 80px;
+    margin-left: auto;
+    margin-right: auto;
 }
 .filter-label{
     font-weight: 600;
