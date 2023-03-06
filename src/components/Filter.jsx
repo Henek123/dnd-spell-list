@@ -61,11 +61,11 @@ export default function LevelFilter(props) {
       <div class="controll-btns">
           <button className="apply-btn" onClick={() => {
             filterSpells()
-            props.loaded(0);
+            // props.loaded(0);
           }}>Apply</button>
           <button className="clear-btn" onClick={() => {
             resetFilters()
-            props.loaded(0);
+            // props.loaded(0);
           }}>Clear</button>
       </div>
     </div>
