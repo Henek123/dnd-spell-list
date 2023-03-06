@@ -10,6 +10,7 @@ export default function Loading() {
     <>
         {visibility && <>
             <div className="loading-screen">
+                <div className="spinner"></div>
                 <h4>Loading...</h4>
             </div>
         </>}
