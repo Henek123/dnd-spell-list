@@ -43,17 +43,57 @@ export default function LevelFilter(props) {
           <button className={levelFilter === "3"  ? "toggled" : undefined} value={3} onClick={setLevel}>Level 3</button>
           <button className={levelFilter === "4"  ? "toggled" : undefined} value={4} onClick={setLevel}>Level 4</button>
           <button className={levelFilter === "5"  ? "toggled" : undefined} value={5} onClick={setLevel}>Level 5</button>
-          <button className={levelFilter === "6"  ? "toggled" : undefined} value={6} onClick={setLevel}>Level 6</button>
-          <button className={levelFilter === "7"  ? "toggled" : undefined} value={7} onClick={setLevel}>Level 7</button>
-          <button className={levelFilter === "8"  ? "toggled" : undefined} value={8} onClick={setLevel}>Level 8</button>
-          <button className={levelFilter === "9"  ? "toggled" : undefined} value={9} onClick={setLevel}>Level 9</button>
+          <button 
+            disabled={classFilter === "paladin" ? true : false} 
+            className={
+              `${classFilter === "paladin" ? "disabled" : undefined} 
+              ${levelFilter === "6"  ? "toggled" : undefined}`
+              } 
+            value={6} onClick={setLevel}>
+              Level 6
+            </button>
+            <button 
+              disabled={classFilter === "paladin" ? true : false} 
+              className={
+                `${classFilter === "paladin" ? "disabled" : undefined} 
+                ${levelFilter === "7"  ? "toggled" : undefined}`
+              } 
+              value={7} onClick={setLevel}>
+                Level 7
+            </button>
+            <button 
+              disabled={classFilter === "paladin" ? true : false} 
+              className={
+                `${classFilter === "paladin" ? "disabled" : undefined} 
+                ${levelFilter === "8"  ? "toggled" : undefined}`
+              } 
+              value={8} onClick={setLevel}>
+                Level 8
+            </button>
+            <button 
+              disabled={classFilter === "paladin" ? true : false} 
+              className={
+                `${classFilter === "paladin" ? "disabled" : undefined} 
+                ${levelFilter === "9"  ? "toggled" : undefined}`
+              } 
+              value={9} onClick={setLevel}>
+                Level 9
+            </button>
       </div>
       <div className="filter-class">
         <p className="filter-label">Class:</p>
           <button className={classFilter === "bard"  ? "toggled" : undefined} value="bard" onClick={setClass}>Bard</button>
           <button className={classFilter === "cleric"  ? "toggled" : undefined} value="cleric" onClick={setClass}>Cleric</button>
           <button className={classFilter === "druid"  ? "toggled" : undefined} value="druid" onClick={setClass}>Druid</button>
-          <button className={classFilter === "paladin"  ? "toggled" : undefined} value="paladin" onClick={setClass}>Paladin</button>
+          <button
+            disabled={levelFilter === "6" ? true : levelFilter === "7" ? true : levelFilter === "8" ? true : levelFilter === "9" ? true : false}  
+            className={`
+              ${levelFilter === "6" ? "disabled" : levelFilter === "7" ? "disabled" : levelFilter === "8" ? "disabled" : levelFilter === "9" ? "disabled" : undefined}
+              ${classFilter === "paladin"  ? "toggled" : undefined}`
+            } 
+            value="paladin" onClick={setClass}>
+              Paladin
+            </button>
           <button className={classFilter === "sorcerer"  ? "toggled" : undefined} value="sorcerer" onClick={setClass}>Sorcerer</button>
           <button className={classFilter === "warlock"  ? "toggled" : undefined} value="warlock" onClick={setClass}>Warlock</button>
           <button className={classFilter === "wizard"  ? "toggled" : undefined} value="wizard" onClick={setClass}>Wizard</button>
