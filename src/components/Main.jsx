@@ -26,6 +26,7 @@ export default function Main(){
         if(spells.called === true && spells.loading === false){
             let spellIndex = spells.data.spells.map(item => item.name)
             spellIndex.sort();
+            setNumOfSpells(spellIndex.length)
             setSpellNames(spellIndex)
             }
     }, [spells.called, spells.loading])
@@ -45,6 +46,7 @@ export default function Main(){
         if(filteredSpellsResults.called === true && filteredSpellsResults.loading === false && filteredSpellsResults.data){
             let result = filteredSpellsResults.data.spells.map(item => item.name);
             result.sort()
+            setNumOfSpells(result.length)
             setSpellNames(result);
         }
     }, [filteredSpellsResults.called, filteredSpellsResults.data, filteredSpellsResults.loading])
@@ -52,16 +54,21 @@ export default function Main(){
       filteredSpells(spellFilter)
     }, [spellFilter])
 
+    //setting loading screen
+    const [spellsLoaded, setSpellsLoaded] = React.useState(0);
+    const [numOfSpells, setNumOfSpells] = React.useState(0);
+    
     //mapping spell list
     const list = spellNames.map(spell => (
-        <Spell key={spell} nameSpell={spell}/>
+        <Spell key={spell} nameSpell={spell} loaded={setSpellsLoaded}/>
     ))
+
     return(
         <>
         <div className="container">
             <p id="anchor"></p>
-            <Filter handleClick={setSpellFilter} />
-            <Loading />
+            <Filter handleClick={setSpellFilter} loaded={setSpellsLoaded} />
+            {spellsLoaded <= numOfSpells - 1 && <Loading />}
             {list}
             {/* <Spell nameSpell="Acid Arrow" /> */}
         </div>

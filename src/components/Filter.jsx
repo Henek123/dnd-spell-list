@@ -59,8 +59,14 @@ export default function LevelFilter(props) {
           <button className={classFilter === "wizard"  ? "toggled" : undefined} value="wizard" onClick={setClass}>Wizard</button>
       </div>
       <div class="controll-btns">
-          <button className="apply-btn" onClick={filterSpells}>Apply</button>
-          <button className="clear-btn" onClick={resetFilters}>Clear</button>
+          <button className="apply-btn" onClick={() => {
+            filterSpells()
+            props.loaded(0);
+          }}>Apply</button>
+          <button className="clear-btn" onClick={() => {
+            resetFilters()
+            props.loaded(0);
+          }}>Clear</button>
       </div>
     </div>
   )

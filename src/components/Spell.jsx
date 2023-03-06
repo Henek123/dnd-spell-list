@@ -33,6 +33,7 @@ export default function Spell(props){
     React.useEffect(() =>{
         if(spellName.called && spellName.loading === false){
             setSpell(spellName.data.spells[0]);
+            props.loaded(prevState => prevState + 1)
         }
     }, [spellName.called, spellName.loading])
     
