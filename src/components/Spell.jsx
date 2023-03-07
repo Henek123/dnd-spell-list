@@ -1,6 +1,6 @@
 import React from "react"
 import "./styles/Spell.css"
-import {useQuery, gql, useLazyQuery} from "@apollo/client"
+import {useQuery, gql} from "@apollo/client"
 
 export default function Spell(props){
 
@@ -32,7 +32,7 @@ export default function Spell(props){
     const spellName = useQuery(GET_SPELL, {variables: {"name": props.nameSpell}})
     React.useEffect(() =>{
         if(spellName.called && spellName.loading === false){
-            setSpell(spellName.data.spells[0]);
+            props.nameSpell === "Fireball" ? setSpell(spellName.data.spells[1]) : setSpell(spellName.data.spells[0]);;
             props.loaded(prevState => prevState + 1)
         }
     }, [spellName.called, spellName.loading])
@@ -74,7 +74,8 @@ export default function Spell(props){
                 <h2>{spell.name}</h2>
                 <p style={style}>
                     {level(spell.level) + " "}
-                    {spell.school && spell.school.name}
+                    {spell.school && spell.school.name + " "}
+                    {spell.ritual && "Ritual"}
                     <span className="expander" onClick={toggle}>{visibility ? "Shrink" : "Expand"}</span>
                 </p>
                 {visibility && <>
