@@ -2,7 +2,7 @@
   <br />
     <br/>
     <br/>
-    <a href="https://henek123.github.io/dnd-spell-list/" target="blank"><strong>Explore the website</strong></a>
+    <a href="https://henek123.github.io/dnd-spell-list/" target="_blank"><strong>Explore the website</strong></a>
     <br />
     
   </p>
