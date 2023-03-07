@@ -9,8 +9,9 @@
     box-shadow: 1px 1px 4px black;
 }
 .logo{
-    width: 150px;
-    margin-left: 1em;
+    margin: 5px;
+    height: 70px;
+    filter: invert(20%) sepia(52%) saturate(7119%) hue-rotate(354deg) brightness(97%) contrast(124%);
 }
 h1{
     text-align: center;

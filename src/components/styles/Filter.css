@@ -72,3 +72,22 @@ button:hover{
 .disabled{
     text-decoration: line-through black 5px;
 }
+@media screen and (max-width: 760px){
+    .filter-label{
+        text-align: center;
+        width: 100%;
+    }
+}
+@media screen and (max-width: 690px){
+    .filter-class > button{
+        width: 45%;
+    }
+}
+@media screen and (max-width: 490px){
+    .filter-class > button{
+        width: 90%;
+    }
+    .filter-level > button{
+        width: 40%;
+    }
+}

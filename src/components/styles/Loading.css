@@ -21,7 +21,7 @@ h4{
     height: 60px;
     border-radius: 100%;
     border: 15px solid whitesmoke;
-    border-top-color: rgb(66, 87, 126);
+    border-bottom-color: rgb(66, 87, 126);
     animation: spin 1.5s ease-in-out infinite;
 }
 @keyframes spin {

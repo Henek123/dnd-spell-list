@@ -1,6 +1,6 @@
 import React from "react"
 import "./styles/Header.css"
-import Logo from "../img/DnD-Logo.png"
+import Logo from "../img/logo.svg"
 
 export default function Header(){
     const [windowWidth, setWindowWidth] = React.useState(window.innerWidth)
