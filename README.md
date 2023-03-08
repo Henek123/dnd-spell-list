@@ -2,7 +2,7 @@
   <br />
     <br/>
     <br/>
-    <a href="https://henek123.github.io/dnd-spell-list/" target="_blank"><strong>Explore the website</strong></a>
+    <a href="https://henek123.github.io/dnd-spell-list/"><strong>Explore the website</strong></a>
     <br />
     
   </p>
@@ -39,9 +39,9 @@ Open [http://localhost:3000](http://localhost:3000) to view it in your browser.
 * Apollo Client
 
 ## Desktop view
-<img src="./src/img/readme/desktop1.png" alt="Logo" width="100%" height="100%">
-<img src="./src/img/readme/desktop2.png" alt="Logo" width="100%" height="100%">
-<img src="./src/img/readme/desktop3.png" alt="Logo" width="100%" height="100%">
+<img src="./src/images/readme/desktop1.png" alt="Logo" width="100%" height="100%">
+<img src="./src/images/readme/desktop2.png" alt="Logo" width="100%" height="100%">
+<img src="./src/images/readme/desktop3.png" alt="Logo" width="100%" height="100%">
 
 ## Mobile view
 <img src="./src/images/readme/mobile1.jpg" alt="Logo" width="30%" height="auto"> <img src="./src/images/readme/mobile2.jpg" alt="Logo" width="30%" height="auto"> <img src="./src/images/readme/mobile2.jpg" alt="Logo" width="30%" height="auto">      
