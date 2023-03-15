@@ -17,11 +17,33 @@ h1{
     text-align: center;
     width: 100%;
 }
+.log-in-btn,
+.log-out-btn,
+.saved-spells-btn,
 .return-btn{
     text-decoration: none;
     color: white;
     align-self: center;
-    width: 170px;
     margin-right: 20px;
     font-weight: 600;
+    cursor: pointer;
+}
+.log-out-btn,
+.log-in-btn{
+    width: 100px;
+}
+.saved-spells-btn{
+    width: 150px;
+    text-align: center;
+}
+.return-btn{
+    text-align: center;
+}
+@media screen and (max-width: 760px){
+    .log-in-btn,
+    .log-out-btn,
+    .saved-spells-btn,
+    .return-btn{
+        margin-right: 5px;
+    }
 }

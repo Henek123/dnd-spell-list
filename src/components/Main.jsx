@@ -4,9 +4,12 @@ import "./styles/Main.css"
 import {useQuery, gql, useLazyQuery} from "@apollo/client"
 import Filter from "./Filter.jsx"
 import Loading from "./Loading.jsx";
+import Firebase from "./Firebase.jsx";
+import SavedSpells from "./SavedSpells.jsx";
 
 
-export default function Main(){
+export default function Main(props){
+    const limit = 1000;
 
     React.useEffect(() =>{
 
@@ -15,7 +18,7 @@ export default function Main(){
     //getting list of all spells
     const GET_SPELLS= gql`
     query {
-        spells(limit: 1000) {
+        spells(limit: ${limit}) {
             name
           }
         }
@@ -34,7 +37,7 @@ export default function Main(){
     //getting filtered spells list
     const GET_SPELLS_BY_FILTER= gql`
         query GetFilteredSpells($class: StringFilter, $level: IntFilter) {
-            spells(limit: 1000, class: $class, level: $level) {
+            spells(limit: ${limit}, class: $class, level: $level) {
                 name
       }
     }
@@ -60,14 +63,25 @@ export default function Main(){
     
     //mapping spell list
     const list = spellNames.map(spell => (
-        <Spell key={spell} nameSpell={spell} loaded={setSpellsLoaded}/>
+        <Spell 
+            key={spell} 
+            nameSpell={spell} 
+            loaded={setSpellsLoaded} 
+            addSavedSpell={props.addSavedSpell}
+            removeSavedSpell={props.removeSavedSpell}
+            savedSpells={props.savedSpells}
+        />
     ))
-
     return(
         <>
         <div className="container">
             <p id="anchor"></p>
+            {props.showOverlay && <SavedSpells 
+                savedSpells={props.savedSpells} 
+                removeSavedSpell={props.removeSavedSpell}
+            />}
             <Filter handleClick={setSpellFilter} loaded={setSpellsLoaded} />
+            <Firebase />
             {spellsLoaded <= numOfSpells - 1 && <Loading />}
             {list}
             {/* <Spell nameSpell="Acid Arrow" /> */}
@@ -75,4 +89,3 @@ export default function Main(){
         </>
     )
 }
-

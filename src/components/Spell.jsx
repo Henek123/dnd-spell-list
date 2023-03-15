@@ -33,7 +33,9 @@ export default function Spell(props){
     React.useEffect(() =>{
         if(spellName.called && spellName.loading === false){
             props.nameSpell === "Fireball" ? setSpell(spellName.data.spells[1]) : setSpell(spellName.data.spells[0]);;
-            props.loaded(prevState => prevState + 1)
+            if(props.loaded){
+                props.loaded(prevState => prevState + 1)
+            }
         }
     }, [spellName.called, spellName.loading])
     
@@ -68,7 +70,6 @@ export default function Spell(props){
             )
         }
     }
-
     return(
             <div className="spell-card">
                 <h2>{spell.name}</h2>
@@ -94,8 +95,14 @@ export default function Spell(props){
                     ))}</p>}
 
                 <p>{spell.desc}</p>
-
                 {spell.higher_level && getHigerLevel()}
+                <hr className="bottom-line"/>
+                {props.savedSpells.includes(spell.name) ? 
+                    <p className="add-remove" onClick={() => {props.removeSavedSpell(spell.name)}}>Remove from saved</p>:
+                    <p className="add-remove" onClick={() => {props.addSavedSpell(spell.name)}}>Add to saved</p> 
+                }
+                
+                
                 </>}
             </div>
     )

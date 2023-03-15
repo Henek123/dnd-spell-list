@@ -35,6 +35,14 @@ hr{
 .expander:hover{
     cursor: pointer;
 }
+.add-remove{
+    text-align: center;
+    font-weight: 600;
+    cursor: pointer;
+}
+.bottom-line{
+    margin: 10px 0;
+}
 @media screen and (max-width: 1750px){
     .spell-card{
         width: 28%;

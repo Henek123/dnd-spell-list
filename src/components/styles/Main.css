@@ -3,7 +3,9 @@
     flex-wrap: wrap;
     justify-content: space-around;
     background-color: whitesmoke;
+    
 }
 body{
     background-color: whitesmoke;
+    /* overflow: hidden; */
 }
