@@ -9,7 +9,7 @@ import SavedSpells from "./SavedSpells.jsx";
 
 
 export default function Main(props){
-    const limit = 1000;
+    const limit = 10;
 
     React.useEffect(() =>{
 
