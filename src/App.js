@@ -82,11 +82,12 @@ function App() {
         userUID={userUID}
         setSavedSpells={setSavedSpells}
       />
-      <Main 
+      <Main
         savedSpells={savedSpells} 
         addSavedSpell={addSavedSpell}
         removeSavedSpell={removeSavedSpell}
-        showOverlay={visibility} 
+        showOverlay={visibility}
+        setShowOverlay={setVisibility}
         toggleOverlay={toggleVisibility}
       />
     </>

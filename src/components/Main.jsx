@@ -72,6 +72,12 @@ export default function Main(props){
             savedSpells={props.savedSpells}
         />
     ))
+
+    //hide scroll in main if modal is open
+    React.useEffect(() => {
+        props.showOverlay ? document.body.style.overflow = 'hidden' : document.body.style.overflow = ''
+    }, [props.showOverlay])
+    
     return(
         <>
         <div className="container">
@@ -79,12 +85,12 @@ export default function Main(props){
             {props.showOverlay && <SavedSpells 
                 savedSpells={props.savedSpells} 
                 removeSavedSpell={props.removeSavedSpell}
+                setShowOverlay={props.setShowOverlay}
             />}
             <Filter handleClick={setSpellFilter} loaded={setSpellsLoaded} />
             <Firebase />
             {spellsLoaded <= numOfSpells - 1 && <Loading />}
             {list}
-            {/* <Spell nameSpell="Acid Arrow" /> */}
         </div>
         </>
     )

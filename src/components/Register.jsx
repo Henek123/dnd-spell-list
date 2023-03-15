@@ -45,9 +45,11 @@ export default function Register(props) {
 
   return (
     <>
-      <p className="close-btn" onClick={() => props.setShowLogInModal(false)}>Close</p>
       <form onSubmit={(event) => handleRegister(event)}>
-        <label htmlFor="e-mail">Your e-mail</label>
+        <div className='wrapper'>
+          <label htmlFor="e-mail">Your e-mail</label>
+          <p className="close-btn"  onClick={() => props.setShowLogInModal(false)}>X</p>
+        </div>
         <input 
           type="email"
           name="email"

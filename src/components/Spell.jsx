@@ -101,8 +101,6 @@ export default function Spell(props){
                     <p className="add-remove" onClick={() => {props.removeSavedSpell(spell.name)}}>Remove from saved</p>:
                     <p className="add-remove" onClick={() => {props.addSavedSpell(spell.name)}}>Add to saved</p> 
                 }
-                
-                
                 </>}
             </div>
     )

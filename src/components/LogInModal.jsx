@@ -28,7 +28,8 @@ export default function LogInModal(props) {
         }
     }
   return (
-    <div className="dimmed">
+    <div className="login-container">
+        <div className="dimmed" onClick={() => props.setShowLogInModal(false)}></div>
         <div className="modal">
             {decideWhatToDisplay(singUp, props.userUID)}
         </div>
