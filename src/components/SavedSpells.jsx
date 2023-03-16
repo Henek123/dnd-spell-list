@@ -58,7 +58,6 @@ export default function SavedSpells(props) {
     const filteredList = sortedSpellList.filter((spell) => spell.level === level)
     const list = filteredList.map((spell) => (
       <Spell
-        saved={true} 
         key={spell.name} 
         nameSpell={spell.name} 
         savedSpells={props.savedSpells} 

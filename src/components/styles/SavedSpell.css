@@ -1,5 +1,5 @@
 .overlay{
-    padding-top: px;
+    z-index: 10;
     background-color: rgba(90, 94, 92, 0.9);
     top: 0;
     bottom:0;

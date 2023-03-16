@@ -73,12 +73,18 @@ export default function Spell(props){
     }
     return(
             <div className="spell-card">
-                <h2>{spell.name}{props.saved && <span onClick={() => {props.removeSavedSpell(spell.name)}} className="remove-btn">-</span>}</h2>
+                <h2>
+                    {props.savedSpells.includes(spell.name) ? 
+                        <span title="Remove from saved spells" className="red add-remove-top" onClick={() => {props.removeSavedSpell(spell.name)}}>—</span>:
+                        <span title="Add to saved spells"className="green add-remove-top" onClick={() => {props.addSavedSpell(spell.name)}}>+</span> 
+                    }
+                    {spell.name}
+                </h2>
                 <p style={style}>
                     {level(spell.level) + " "}
                     {spell.school && spell.school.name + " "}
                     {spell.ritual && "Ritual"}
-                    <span className="expander" onClick={toggle}>{visibility ? "Shrink" : "Expand"}</span>
+                    <span className="expander" onClick={toggle}>{visibility ? "Shrink ↑" : "Expand ↓"}</span>
                 </p>
                 {visibility && <>
                 <hr />
@@ -99,8 +105,8 @@ export default function Spell(props){
                 {spell.higher_level && getHigerLevel()}
                 <hr className="bottom-line"/>
                 {props.savedSpells.includes(spell.name) ? 
-                    <p className="add-remove" onClick={() => {props.removeSavedSpell(spell.name)}}>Remove from saved</p>:
-                    <p className="add-remove" onClick={() => {props.addSavedSpell(spell.name)}}>Add to saved</p> 
+                    <p className="add-remove-bottom"><span onClick={() => {props.removeSavedSpell(spell.name)}}>Remove from saved</span></p>:
+                    <p className="add-remove-bottom"><span onClick={() => {props.addSavedSpell(spell.name)}}>Add to saved</span></p> 
                 }
                 </>}
             </div>
