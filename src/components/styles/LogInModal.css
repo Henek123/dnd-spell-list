@@ -16,6 +16,7 @@
     flex-direction: column;
     align-content: center;
     min-width: 300px;
+    z-index: 10;
 }
 .modal input{
     font-size: 18px;
@@ -42,6 +43,7 @@
     background-color: rgba(90, 94, 92, 0.9);
     position: fixed;
     cursor: pointer;
+    z-index: 10;
 }
 .modal label{
     display: block;

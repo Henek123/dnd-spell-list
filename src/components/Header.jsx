@@ -12,7 +12,6 @@ export default function Header(props){
         function watchWidth() {
             setWindowWidth(window.innerWidth)
         }
-        
         window.addEventListener("resize", watchWidth)
         
         return function() {
@@ -23,9 +22,9 @@ export default function Header(props){
         signOut(props.auth).then(() => {
             props.setUserUID(false);
             props.setSavedSpells([])
-          }).catch((error) => {
+        }).catch((error) => {
             console.log(error)
-          });
+        });
     }
     return(
         <>
@@ -34,10 +33,10 @@ export default function Header(props){
             {windowWidth > 1000 ? <h1>Dungeons & Dragons Spell List</h1>:
             <h1>Spell List</h1>}
             {props.userUID ? 
-                <p className="log-out-btn" onClick={() => handleLogOut()}>Log Out</p>:
+                <p className="log-out-btn" onClick={handleLogOut}>Log Out</p>:
                 <p className="log-in-btn" onClick={() => setShowLogInModal(prevState => !prevState)}>Log In</p>
             }
-            <p className="saved-spells-btn" onClick={props.toggleOverlay}>{props.showOverlay ? "Hide Saved Spells" : "Show Saved Spells"}</p>
+            <p className="saved-spells-btn" onClick={!showLogInModal ? props.toggleOverlay : undefined}>{props.showOverlay ? "Hide Saved Spells" : "Show Saved Spells"}</p>
             <a className="return-btn" href="#anchor">Return To Top</a>
         </header>
         {showLogInModal && 

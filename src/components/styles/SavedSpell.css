@@ -15,7 +15,7 @@
     display: flex;
     flex-wrap: wrap;
     flex-direction: row;
-    justify-content: space-around;
+    justify-content: center;
     align-items: flex-start;
 }
 .hide-btn{
@@ -26,4 +26,20 @@
     font-weight: 600;
     font-size: 28px;
     cursor: pointer;
+}
+.overlay-container h1{
+    color: whitesmoke;
+    font-size: 28px;
+    margin: unset;
+}
+.overlay span{
+    cursor: pointer;
+    user-select: none;
+}
+.divider{
+    border: solid 2px;
+    width: 80%;
+    border-radius: 2px;
+    box-shadow: 1px 1px 5px rgb(255, 200, 61);
+    margin: 10px;
 }

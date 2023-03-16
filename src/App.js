@@ -1,5 +1,5 @@
 import { initializeApp } from "firebase/app";
-import { getAnalytics } from "firebase/analytics";
+// import { getAnalytics } from "firebase/analytics";
 import { getAuth } from "firebase/auth";
 import './App.css';
 import Main from "./components/Main.jsx";
@@ -35,11 +35,11 @@ function App() {
   const auth = getAuth();
   
   const db = getFirestore(app);
-  const analytics = getAnalytics(app);
+  // const analytics = getAnalytics(app);
 
-  const [visibility, setVisibility] = React.useState(false)
+  const [showOverlay, setShowOverlay] = React.useState(false)
     function toggleVisibility(){
-        setVisibility(prevState => !prevState);
+        setShowOverlay(prevState => !prevState);
     }
 
   const [savedSpells, setSavedSpells] = React.useState([]);
@@ -76,7 +76,7 @@ function App() {
   return (
     <>
       <Header 
-        showOverlay={visibility} 
+        showOverlay={showOverlay} 
         toggleOverlay={toggleVisibility} 
         auth={auth} setUserUID={setUserUID} 
         userUID={userUID}
@@ -86,8 +86,8 @@ function App() {
         savedSpells={savedSpells} 
         addSavedSpell={addSavedSpell}
         removeSavedSpell={removeSavedSpell}
-        showOverlay={visibility}
-        setShowOverlay={setVisibility}
+        showOverlay={showOverlay}
+        setShowOverlay={setShowOverlay}
         toggleOverlay={toggleVisibility}
       />
     </>

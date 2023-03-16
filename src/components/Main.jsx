@@ -4,7 +4,6 @@ import "./styles/Main.css"
 import {useQuery, gql, useLazyQuery} from "@apollo/client"
 import Filter from "./Filter.jsx"
 import Loading from "./Loading.jsx";
-import Firebase from "./Firebase.jsx";
 import SavedSpells from "./SavedSpells.jsx";
 
 
@@ -88,7 +87,6 @@ export default function Main(props){
                 setShowOverlay={props.setShowOverlay}
             />}
             <Filter handleClick={setSpellFilter} loaded={setSpellsLoaded} />
-            <Firebase />
             {spellsLoaded <= numOfSpells - 1 && <Loading />}
             {list}
         </div>

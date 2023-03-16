@@ -37,7 +37,7 @@ export default function Register(props) {
     })
     .catch((error) => {
       setEmailInUse(true);
-      const errorCode = error.code;
+      // const errorCode = error.code;
       const errorMessage = error.message;
       console.log(errorMessage)
   });

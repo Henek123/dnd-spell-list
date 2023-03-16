@@ -27,6 +27,7 @@ h1{
     margin-right: 20px;
     font-weight: 600;
     cursor: pointer;
+    user-select: none;
 }
 .log-out-btn,
 .log-in-btn{
@@ -45,5 +46,6 @@ h1{
     .saved-spells-btn,
     .return-btn{
         margin-right: 5px;
+        text-align: center;
     }
 }
