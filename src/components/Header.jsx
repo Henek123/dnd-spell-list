@@ -8,6 +8,8 @@ import { signOut } from "firebase/auth";
 export default function Header(props){
     const [windowWidth, setWindowWidth] = React.useState(window.innerWidth)
     const [showLogInModal, setShowLogInModal] = React.useState(false);
+
+    //checking for windows width
     React.useEffect(() => {
         function watchWidth() {
             setWindowWidth(window.innerWidth)
@@ -18,6 +20,8 @@ export default function Header(props){
             window.removeEventListener("resize", watchWidth)
         }
     }, [])
+
+    //handling logout
     function handleLogOut(){
         signOut(props.auth).then(() => {
             props.setUserUID(false);

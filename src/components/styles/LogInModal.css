@@ -40,7 +40,7 @@
 .dimmed{
     width: 100vw;
     height: 100vh;
-    background-color: rgba(90, 94, 92, 0.9);
+    background-color: rgba(34, 34, 34, 0.8);
     position: fixed;
     cursor: pointer;
     z-index: 10;

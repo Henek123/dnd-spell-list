@@ -29,6 +29,11 @@ function App() {
     measurementId: process.env.REACT_APP_MEASUREMENT_ID
     
   };
+  //visibility of saved spells overlay
+  const [showOverlay, setShowOverlay] = React.useState(false)
+    function toggleVisibility(){
+        setShowOverlay(prevState => !prevState);
+    }
   
   // Initialize Firebase
   const app = initializeApp(firebaseConfig);
@@ -37,13 +42,9 @@ function App() {
   const db = getFirestore(app);
   // const analytics = getAnalytics(app);
 
-  const [showOverlay, setShowOverlay] = React.useState(false)
-    function toggleVisibility(){
-        setShowOverlay(prevState => !prevState);
-    }
-
   const [savedSpells, setSavedSpells] = React.useState([]);
 
+  //saving data to firestore
   React.useEffect(() =>{
     if(userUID){
       const docRef = doc(db, "saved-spells", userUID);
@@ -53,6 +54,7 @@ function App() {
 
   }, [savedSpells]);
 
+  //loading data from firestore
   React.useEffect(() =>{
     (async () => {
       if(userUID){
@@ -66,6 +68,7 @@ function App() {
     }) ();
   }, [userUID]);
 
+  //adding/removing spells from saved spells
   function addSavedSpell(spellName){
     setSavedSpells(prevState => [...prevState, spellName])
   }

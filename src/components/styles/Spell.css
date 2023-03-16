@@ -1,6 +1,9 @@
 *{
     font-family: Verdana, Tahoma, sans-serif
 }
+.ReactCollapse--collapse {
+    transition: height 500ms;
+}
 h2{
     margin: 0;
 }
@@ -16,6 +19,7 @@ h2{
     margin: 1em 1em;
     height: 100%;
     box-shadow: 2px 2px 5px grey;
+    transition: 600ms ease-out;
 }
 span{
     font-weight: 600;

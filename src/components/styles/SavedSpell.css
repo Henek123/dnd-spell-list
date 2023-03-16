@@ -1,6 +1,6 @@
 .overlay{
-    z-index: 10;
-    background-color: rgba(90, 94, 92, 0.9);
+    z-index: 2;
+    background-color: rgba(34, 34, 34, 0.8);
     top: 0;
     bottom:0;
     position:fixed;
@@ -48,4 +48,7 @@
     top: -15px;
     color: red;
     cursor: pointer;
+}
+.disable-box-shadow{
+    box-shadow: none;
 }

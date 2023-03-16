@@ -5,6 +5,7 @@ export default function LevelFilter(props) {
   const [levelFilter, setLevelFilter] = React.useState(null);
   const [classFilter, setClassFilter] = React.useState(null);
 
+  //filtering spells
   function filterSpells(){
     let temp = {
       variables: {
@@ -14,6 +15,8 @@ export default function LevelFilter(props) {
     }
     props.handleClick(temp)
   }
+
+  //resetting filters
   function resetFilters(){
     setLevelFilter(null);
     setClassFilter(null)
@@ -25,10 +28,14 @@ export default function LevelFilter(props) {
     }
     props.handleClick(temp)
   }
+  
+  //setting level filter
   function setLevel(event){
     let value = event.target.value
     setLevelFilter(prevState => prevState === value ? null : value)
   }
+
+  //setting class filter
   function setClass(event){
     let value = event.target.value
     setClassFilter(prevState => prevState === value ? null : value)

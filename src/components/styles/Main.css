@@ -7,7 +7,6 @@
 }
 body{
     background-color: whitesmoke;
-    /* overflow: hidden; */
 }
 .no-scroll{
     overflow-y: hidden;

@@ -1,6 +1,7 @@
 import React from "react"
 import "./styles/Spell.css"
 import {useQuery, gql} from "@apollo/client"
+import {UnmountClosed} from 'react-collapse';
 
 export default function Spell(props){
 
@@ -45,11 +46,7 @@ export default function Spell(props){
     function toggle(){
         setVisibility(prevState => !prevState)
     }
-    const style = {
-        marginBottom: visibility ? "1.5em" : "0", 
-        fontStyle: "italic"
-    }
-
+    
     //settling level on spell card
     function level(level){
         if(level === 0) return `Cantrip`
@@ -71,8 +68,13 @@ export default function Spell(props){
             )
         }
     }
+
+    const style = {
+        boxShadow: "none"
+    }
+
     return(
-            <div className="spell-card">
+            <div className={`spell-card ${props.saved ? "disable-box-shadow" : ""}`}>
                 <h2>
                     {props.savedSpells.includes(spell.name) ? 
                         <span title="Remove from saved spells" className="red add-remove-top" onClick={() => {props.removeSavedSpell(spell.name)}}>—</span>:
@@ -80,35 +82,35 @@ export default function Spell(props){
                     }
                     {spell.name}
                 </h2>
-                <p style={style}>
+                <p style={{fontStyle: "italic"}}>
                     {level(spell.level) + " "}
                     {spell.school && spell.school.name + " "}
                     {spell.ritual && "Ritual"}
                     <span className="expander" onClick={toggle}>{visibility ? "Shrink ↑" : "Expand ↓"}</span>
                 </p>
-                {visibility && <>
-                <hr />
-                <p><span>Casting Time:</span> {spell.casting_time}</p>
-                <p><span>Range:</span> {spell.range}</p>
+                <UnmountClosed isOpened={visibility}>
+                    <hr style={{margin: "1em 0"}} />
+                    <p><span>Casting Time:</span> {spell.casting_time}</p>
+                    <p><span>Range:</span> {spell.range}</p>
 
-                {spell.components ? <p><span>Components:</span> {spell.components.map(item => `${item} `)}</p> :
-                <p><span>Components:</span> "None"</p>}
+                    {spell.components ? <p><span>Components:</span> {spell.components.map(item => `${item} `)}</p> :
+                    <p><span>Components:</span> "None"</p>}
 
-                <p><span>Materials:</span> {spell.material ? spell.material : "None"}</p>
-                <p><span>Duration:</span> {spell.duration} {spell.concentration && "Concentration"}</p>
+                    <p><span>Materials:</span> {spell.material ? spell.material : "None"}</p>
+                    <p><span>Duration:</span> {spell.duration} {spell.concentration && "Concentration"}</p>
 
-                {spell.classes && <p style={{marginBottom: "1.5em"}}><span>Classes:</span> {spell.classes.map(item => (
-                    item.name + " "
-                    ))}</p>}
+                    {spell.classes && <p style={{marginBottom: "1.5em"}}><span>Classes:</span> {spell.classes.map(item => (
+                        item.name + " "
+                        ))}</p>}
 
-                <p>{spell.desc}</p>
-                {spell.higher_level && getHigerLevel()}
-                <hr className="bottom-line"/>
-                {props.savedSpells.includes(spell.name) ? 
-                    <p className="add-remove-bottom"><span onClick={() => {props.removeSavedSpell(spell.name)}}>Remove from saved</span></p>:
-                    <p className="add-remove-bottom"><span onClick={() => {props.addSavedSpell(spell.name)}}>Add to saved</span></p> 
-                }
-                </>}
+                    <p>{spell.desc}</p>
+                    {spell.higher_level && getHigerLevel()}
+                    <hr className="bottom-line"/>
+                    {props.savedSpells.includes(spell.name) ? 
+                        <p className="add-remove-bottom"><span onClick={() => {props.removeSavedSpell(spell.name)}}>Remove from saved</span></p>:
+                        <p className="add-remove-bottom"><span onClick={() => {props.addSavedSpell(spell.name)}}>Add to saved</span></p> 
+                    }
+                </UnmountClosed>
             </div>
     )
 }

@@ -19,9 +19,7 @@ export default function Login(props) {
   }
 
   //handle login
-
   function handleLogin(event){
-
     event.preventDefault();
     signInWithEmailAndPassword(props.auth, user.email, user.password)
     .then((userCredential) => {
