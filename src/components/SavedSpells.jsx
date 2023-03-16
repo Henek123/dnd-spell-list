@@ -66,6 +66,21 @@ export default function SavedSpells(props) {
     ))
     return list
   }
+
+  function showLine(level){
+    let arr = [cantrips, level1, level2, level3, level4, level5, level6, level7, level8, level9];
+    let counter = 0;
+    for (let i = level + 1; i < 10; i++){
+      if(arr[i].length !== 0) counter++
+    }
+    console.log(counter);
+    if(counter > 0){
+      counter = 0;
+      return true;
+    }
+    return false;
+  }
+
   const [showCantrips, setShowCantrips] = React.useState(false);
   const [showLevel1, setShowLevel1] = React.useState(false);
   const [showLevel2, setShowLevel2] = React.useState(false);
@@ -96,39 +111,39 @@ export default function SavedSpells(props) {
 
           {level1.length > 0 && <h1><span onClick={() => setShowLevel1(prevState => !prevState)}>Level 1 {showLevel1 ? "↑" : "↓"}</span></h1>}
           {showLevel1 && level1}
-          {showLevel1 && <hr className='divider' />}
+          {(showLine(1) && showLevel1) && <hr className='divider' />}
 
           {level2.length > 0 && <h1><span onClick={() => setShowLevel2(prevState => !prevState)}>Level 2 {showLevel2 ? "↑" : "↓"}</span></h1>}
           {showLevel2 && level2}
-          {showLevel2 && <hr className='divider' />}
+          {(showLine(2) && showLevel2) && <hr className='divider' />}
 
           {level3.length > 0 && <h1><span onClick={() => setShowLevel3(prevState => !prevState)}>Level 3 {showLevel3 ? "↑" : "↓"}</span></h1>}
           {showLevel3 && level3}
-          {showLevel3 && <hr className='divider' />}
+          {(showLine(3) && showLevel3) && <hr className='divider' />}
 
           {level4.length > 0 && <h1><span onClick={() => setShowLevel4(prevState => !prevState)}>Level 4 {showLevel4 ? "↑" : "↓"}</span></h1>}
           {showLevel4 && level4}
-          {showLevel4 && <hr className='divider' />}
+          {(showLine(4) && showLevel4) && <hr className='divider' />}
 
           {level5.length > 0 && <h1><span onClick={() => setShowLevel5(prevState => !prevState)}>Level 5 {showLevel5 ? "↑" : "↓"}</span></h1>}
           {showLevel5 && level5}
-          {showLevel5 && <hr className='divider' />}
+          {(showLine(5) && showLevel5) && <hr className='divider' />}
 
           {level6.length > 0 && <h1><span onClick={() => setShowLevel6(prevState => !prevState)}>Level 6 {showLevel6 ? "↑" : "↓"}</span></h1>}
           {showLevel6 && level6}
-          {showLevel6 && <hr className='divider' />}
+          {(showLine(6) && showLevel6) && <hr className='divider' />}
 
           {level7.length > 0 && <h1><span onClick={() => setShowLevel7(prevState => !prevState)}>Level 7 {showLevel7 ? "↑" : "↓"}</span></h1>}
           {showLevel7 && level7}
-          {showLevel7 && <hr className='divider' />}
+          {(showLine(7) && showLevel7) && <hr className='divider' />}
 
           {level8.length > 0 && <h1><span onClick={() => setShowLevel8(prevState => !prevState)}>Level 8 {showLevel8 ? "↑" : "↓"}</span></h1>}
           {showLevel8 && level8}
-          {showLevel8 && <hr className='divider' />}
+          {(showLine(8) && showLevel8) && <hr className='divider' />}
 
           {level9.length > 0 && <h1><span onClick={() => setShowLevel9(prevState => !prevState)}>Level 9 {showLevel9 ? "↑" : "↓"}</span></h1>}
           {showLevel9 && level9}
-          {showLevel9 && <hr className='divider' />}
+          {(showLine(9) && showLevel9) && <hr className='divider' />}
         </div>
     </section>
   )
