@@ -40,6 +40,12 @@
     border: solid 2px;
     width: 80%;
     border-radius: 2px;
-    box-shadow: 1px 1px 5px rgb(255, 200, 61);
     margin: 10px;
+}
+.remove-btn{
+    float: right;
+    position: relative;
+    top: -15px;
+    color: red;
+    cursor: pointer;
 }

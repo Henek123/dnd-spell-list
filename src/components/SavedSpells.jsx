@@ -57,7 +57,8 @@ export default function SavedSpells(props) {
   function getList(level){
     const filteredList = sortedSpellList.filter((spell) => spell.level === level)
     const list = filteredList.map((spell) => (
-      <Spell 
+      <Spell
+        saved={true} 
         key={spell.name} 
         nameSpell={spell.name} 
         savedSpells={props.savedSpells} 
@@ -73,7 +74,6 @@ export default function SavedSpells(props) {
     for (let i = level + 1; i < 10; i++){
       if(arr[i].length !== 0) counter++
     }
-    console.log(counter);
     if(counter > 0){
       counter = 0;
       return true;

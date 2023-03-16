@@ -32,7 +32,8 @@ export default function Spell(props){
     const spellName = useQuery(GET_SPELL, {variables: {"name": props.nameSpell}})
     React.useEffect(() =>{
         if(spellName.called && spellName.loading === false){
-            props.nameSpell === "Fireball" ? setSpell(spellName.data.spells[1]) : setSpell(spellName.data.spells[0]);;
+            let index = spellName.data.spells.findIndex((spell) => spell.name === props.nameSpell)
+            setSpell(spellName.data.spells[index])
             if(props.loaded){
                 props.loaded(prevState => prevState + 1)
             }
@@ -72,7 +73,7 @@ export default function Spell(props){
     }
     return(
             <div className="spell-card">
-                <h2>{spell.name}</h2>
+                <h2>{spell.name}{props.saved && <span onClick={() => {props.removeSavedSpell(spell.name)}} className="remove-btn">-</span>}</h2>
                 <p style={style}>
                     {level(spell.level) + " "}
                     {spell.school && spell.school.name + " "}
