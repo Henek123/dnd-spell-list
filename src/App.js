@@ -72,10 +72,11 @@ function App() {
         const docRefPrepared = doc(db, "prepared-spells", userUID);
         const docSnapSaved = await getDoc(docRefSaved);
         const docSnapPrepared = await getDoc(docRefPrepared);
-      if (docSnapSaved.exists() && docSnapPrepared.exists()) {
+      if (docSnapSaved.exists()) {
         setSavedSpells(docSnapSaved.data().spells)
+      }
+      if(docSnapPrepared.exists()){
         setPreparedSpells(docSnapPrepared.data().prepared)
-      } else {
       }
       }
     }) ();
