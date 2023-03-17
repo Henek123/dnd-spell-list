@@ -66,17 +66,15 @@ export default function Main(props){
             key={spell} 
             nameSpell={spell} 
             loaded={setSpellsLoaded} 
+            savedSpells={props.savedSpells}
             addSavedSpell={props.addSavedSpell}
             removeSavedSpell={props.removeSavedSpell}
-            savedSpells={props.savedSpells}
         />
     ))
-
     //hide scroll in main if modal is open
     React.useEffect(() => {
         props.showOverlay ? document.body.style.overflow = 'hidden' : document.body.style.overflow = ''
     }, [props.showOverlay])
-    
     return(
         <>
         <div className="container">
@@ -85,6 +83,9 @@ export default function Main(props){
                 savedSpells={props.savedSpells} 
                 removeSavedSpell={props.removeSavedSpell}
                 setShowOverlay={props.setShowOverlay}
+                preparedSpells={props.preparedSpells}
+                addPreparedSpell={props.addPreparedSpell}
+                removePreparedSpell={props.removePreparedSpell}
             />}
             <Filter handleClick={setSpellFilter} loaded={setSpellsLoaded} />
             {spellsLoaded <= numOfSpells - 1 && <Loading />}

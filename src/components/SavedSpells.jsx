@@ -63,6 +63,9 @@ export default function SavedSpells(props) {
         nameSpell={spell.name} 
         savedSpells={props.savedSpells} 
         removeSavedSpell={props.removeSavedSpell}
+        preparedSpells={props.preparedSpells}
+        addPreparedSpell={props.addPreparedSpell}
+        removePreparedSpell={props.removePreparedSpell}
       />
     ))
     return list

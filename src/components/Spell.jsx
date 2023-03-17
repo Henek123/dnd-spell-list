@@ -69,13 +69,24 @@ export default function Spell(props){
         }
     }
 
-    const style = {
-        boxShadow: "none"
-    }
+    const [isPrepared, setIsPrepared] = React.useState(false);
 
+    function prepared(event){
+        setIsPrepared(event.target.checked);
+        if(event.target.checked === true){
+            props.addPreparedSpell(spell.name);
+        } else{
+            props.removePreparedSpell(spell.name);
+        }
+    }
+    React.useEffect(() => {
+        if(props.preparedSpells && props.preparedSpells.includes(spell.name)) setIsPrepared(true);
+    })
+    
     return(
             <div className={`spell-card ${props.saved ? "disable-box-shadow" : ""}`}>
                 <h2>
+                    {props.saved && <input checked={isPrepared} onChange={prepared} className="prepared" title="Is prepared" type="checkbox" />}
                     {props.savedSpells.includes(spell.name) ? 
                         <span title="Remove from saved spells" className="red add-remove-top" onClick={() => {props.removeSavedSpell(spell.name)}}>—</span>:
                         <span title="Add to saved spells"className="green add-remove-top" onClick={() => {props.addSavedSpell(spell.name)}}>+</span> 

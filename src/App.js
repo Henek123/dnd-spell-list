@@ -43,6 +43,7 @@ function App() {
   // const analytics = getAnalytics(app);
 
   const [savedSpells, setSavedSpells] = React.useState([]);
+  const [preparedSpells, setPreparedSpells] = React.useState([]);
 
   //saving data to firestore
   React.useEffect(() =>{
@@ -54,19 +55,60 @@ function App() {
 
   }, [savedSpells]);
 
+  React.useEffect(() =>{
+    if(userUID){
+      const docRef = doc(db, "prepared-spells", userUID);
+      const data = {prepared: preparedSpells};
+      setDoc(docRef, data)
+    }
+
+  }, [preparedSpells]);
+
   //loading data from firestore
   React.useEffect(() =>{
     (async () => {
       if(userUID){
-        const docRef = doc(db, "saved-spells", userUID);
-        const docSnap = await getDoc(docRef);
-      if (docSnap.exists()) {
-        setSavedSpells(docSnap.data().spells)
+        const docRefSaved = doc(db, "saved-spells", userUID);
+        const docRefPrepared = doc(db, "prepared-spells", userUID);
+        const docSnapSaved = await getDoc(docRefSaved);
+        const docSnapPrepared = await getDoc(docRefPrepared);
+      if (docSnapSaved.exists() && docSnapPrepared.exists()) {
+        setSavedSpells(docSnapSaved.data().spells)
+        setPreparedSpells(docSnapPrepared.data().prepared)
       } else {
       }
       }
     }) ();
   }, [userUID]);
+
+
+// //loading saved spells from firestore
+// React.useEffect(() =>{
+//   (async () => {
+//     if(userUID){
+//       const docRef = doc(db, "saved-spells", userUID);
+//       const docSnap = await getDoc(docRef);
+//     if (docSnap.exists()) {
+//       setSavedSpells(docSnap.data().spells)
+//     } else {
+//     }
+//     }
+//   }) ();
+// }, [userUID]);
+
+// //loading prepared spells from firestore
+// React.useEffect(() =>{
+//   (async () => {
+//     if(userUID){
+//       const docRef = doc(db, "prepared-spells", userUID);
+//       const docSnap = await getDoc(docRef);
+//     if (docSnap.exists()) {
+//       setPreparedSpells(docSnap.data().prepared)
+//     } else {
+//     }
+//     }
+//   }) ();
+// }, [userUID]);
 
   //adding/removing spells from saved spells
   function addSavedSpell(spellName){
@@ -76,6 +118,17 @@ function App() {
     const filteredArray = savedSpells.filter(item => (item !== spellName))
     setSavedSpells(filteredArray)
   }
+
+ 
+  //adding/removing spells from prepared spells
+  function addPreparedSpell(spellName){
+    setPreparedSpells(prevState => [...prevState, spellName])
+  }
+  function removePreparedSpell(spellName){
+    const filteredArray = preparedSpells.filter(item => (item !== spellName))
+    setPreparedSpells(filteredArray)
+  }
+  
   return (
     <>
       <Header 
@@ -89,6 +142,9 @@ function App() {
         savedSpells={savedSpells} 
         addSavedSpell={addSavedSpell}
         removeSavedSpell={removeSavedSpell}
+        preparedSpells={preparedSpells}
+        addPreparedSpell={addPreparedSpell}
+        removePreparedSpell={removePreparedSpell}
         showOverlay={showOverlay}
         setShowOverlay={setShowOverlay}
         toggleOverlay={toggleVisibility}
