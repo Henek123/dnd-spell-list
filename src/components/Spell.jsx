@@ -88,7 +88,7 @@ export default function Spell(props){
                 <h2>
                     {props.saved && <input checked={isPrepared} onChange={prepared} className="prepared" title="Is prepared" type="checkbox" />}
                     {props.savedSpells.includes(spell.name) ? 
-                        <span title="Remove from saved spells" className="red add-remove-top" onClick={() => {props.removeSavedSpell(spell.name)}}>—</span>:
+                        <span title="Remove from saved spells" className="red add-remove-top" onClick={() => {props.removeSavedSpell(spell.name); props.removePreparedSpell(spell.name)}}>—</span>:
                         <span title="Add to saved spells"className="green add-remove-top" onClick={() => {props.addSavedSpell(spell.name)}}>+</span> 
                     }
                     {spell.name}
@@ -118,7 +118,7 @@ export default function Spell(props){
                     {spell.higher_level && getHigerLevel()}
                     <hr className="bottom-line"/>
                     {props.savedSpells.includes(spell.name) ? 
-                        <p className="add-remove-bottom"><span onClick={() => {props.removeSavedSpell(spell.name)}}>Remove from saved</span></p>:
+                        <p className="add-remove-bottom"><span onClick={() => {props.removeSavedSpell(spell.name); props.removePreparedSpell(spell.name)}}>Remove from saved</span></p>:
                         <p className="add-remove-bottom"><span onClick={() => {props.addSavedSpell(spell.name)}}>Add to saved</span></p> 
                     }
                 </UnmountClosed>

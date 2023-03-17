@@ -48,7 +48,7 @@ function App() {
   //saving data to firestore
   React.useEffect(() =>{
     if(userUID){
-      const docRef = doc(db, "saved-spells", userUID);
+      const docRef = doc(db ,userUID, "saved-spells");
       const data = {spells: savedSpells};
       setDoc(docRef, data)
     }
@@ -57,7 +57,7 @@ function App() {
 
   React.useEffect(() =>{
     if(userUID){
-      const docRef = doc(db, "prepared-spells", userUID);
+      const docRef = doc(db, userUID, "prepared-spells");
       const data = {prepared: preparedSpells};
       setDoc(docRef, data)
     }
@@ -68,15 +68,17 @@ function App() {
   React.useEffect(() =>{
     (async () => {
       if(userUID){
-        const docRefSaved = doc(db, "saved-spells", userUID);
-        const docRefPrepared = doc(db, "prepared-spells", userUID);
+        const docRefSaved = doc(db, userUID, "saved-spells");
+        const docRefPrepared = doc(db, userUID, "prepared-spells" );
         const docSnapSaved = await getDoc(docRefSaved);
         const docSnapPrepared = await getDoc(docRefPrepared);
       if (docSnapSaved.exists()) {
         setSavedSpells(docSnapSaved.data().spells)
+        console.log(docSnapSaved.data())
       }
       if(docSnapPrepared.exists()){
         setPreparedSpells(docSnapPrepared.data().prepared)
+        console.log(docSnapPrepared.data())
       }
       }
     }) ();
