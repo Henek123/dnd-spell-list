@@ -82,35 +82,6 @@ function App() {
     }) ();
   }, [userUID]);
 
-
-// //loading saved spells from firestore
-// React.useEffect(() =>{
-//   (async () => {
-//     if(userUID){
-//       const docRef = doc(db, "saved-spells", userUID);
-//       const docSnap = await getDoc(docRef);
-//     if (docSnap.exists()) {
-//       setSavedSpells(docSnap.data().spells)
-//     } else {
-//     }
-//     }
-//   }) ();
-// }, [userUID]);
-
-// //loading prepared spells from firestore
-// React.useEffect(() =>{
-//   (async () => {
-//     if(userUID){
-//       const docRef = doc(db, "prepared-spells", userUID);
-//       const docSnap = await getDoc(docRef);
-//     if (docSnap.exists()) {
-//       setPreparedSpells(docSnap.data().prepared)
-//     } else {
-//     }
-//     }
-//   }) ();
-// }, [userUID]);
-
   //adding/removing spells from saved spells
   function addSavedSpell(spellName){
     setSavedSpells(prevState => [...prevState, spellName])
