@@ -48,4 +48,8 @@ h1{
         margin-right: 5px;
         text-align: center;
     }
+    .logo{
+        height: 50px;
+        margin-top: 15px;
+    }
 }

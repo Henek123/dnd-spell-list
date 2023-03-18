@@ -24,14 +24,12 @@ export default function Register(props) {
    function handleRegister(event){
     event.preventDefault();
     setPasswordConfirmation(null)
-    console.log(user.password, user.confirmPassword)
     if(user.password !== user.confirmPassword){
       setPasswordConfirmation("Passwords are diffrent")
       return;
     }
     createUserWithEmailAndPassword(props.auth, user.email, user.password)
     .then((userCredential) => {
-    console.log("yes")
     const firebaseUser = userCredential.user;
     props.setUserUID(firebaseUser.uid)
     })

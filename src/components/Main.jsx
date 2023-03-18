@@ -5,6 +5,7 @@ import {useQuery, gql, useLazyQuery} from "@apollo/client"
 import Filter from "./Filter.jsx"
 import Loading from "./Loading.jsx";
 import SavedSpells from "./SavedSpells.jsx";
+import SearchBar from "./SearchBar.jsx";
 
 
 export default function Main(props){
@@ -24,12 +25,13 @@ export default function Main(props){
     `;
     const spells = useQuery(GET_SPELLS)
     const [spellNames, setSpellNames] = React.useState([]);
+    const [allSpellNames, setAllSpellNames] = React.useState([]);
     React.useEffect(() => {
         if(spells.called === true && spells.loading === false){
             let spellIndex = spells.data.spells.map(item => item.name)
             spellIndex.sort();
             setNumOfSpells(spellIndex.length)
-            setSpellNames(spellIndex)
+            setAllSpellNames(spellIndex)
             }
     }, [spells.called, spells.loading])
 
@@ -44,11 +46,18 @@ export default function Main(props){
     `;
     const [filteredSpells, filteredSpellsResults] = useLazyQuery(GET_SPELLS_BY_FILTER);
     const [spellFilter, setSpellFilter] = React.useState(null);
+    const [isFiltered, setIsFiltered] = React.useState(false);
+    const [allFilteredSpells, setAllFilteredSpells] = React.useState();
     React.useEffect(() =>{
         if(filteredSpellsResults.called === true && filteredSpellsResults.loading === false && filteredSpellsResults.data){
             let result = filteredSpellsResults.data.spells.map(item => item.name);
             result.sort()
-            setNumOfSpells(result.length)
+            if(spellFilter !== null && (spellFilter.variables.class !== null || spellFilter.variables.level !== null)){
+                setIsFiltered(true);
+            } else{
+                setIsFiltered(false)
+            }
+            setAllFilteredSpells(result)
             setSpellNames(result);
         }
     }, [filteredSpellsResults.called, filteredSpellsResults.data, filteredSpellsResults.loading])
@@ -75,6 +84,30 @@ export default function Main(props){
     React.useEffect(() => {
         props.showOverlay ? document.body.style.overflow = 'hidden' : document.body.style.overflow = ''
     }, [props.showOverlay])
+
+    const [searched, setSearched] = React.useState("");
+    React.useEffect(() => {
+        let filteredData
+        if(searched !== ""){
+            if(isFiltered){
+                filteredData = spellNames.filter((spell) => {
+                    return spell.toLowerCase().includes(searched)
+                }
+                )
+                setSpellNames(filteredData)
+            } else{
+                filteredData = allSpellNames.filter((spell) => {
+                    return spell.toLowerCase().includes(searched)
+                }
+                )
+                setSpellNames(filteredData)
+            }
+        } else{
+            isFiltered ? setSpellNames(allFilteredSpells) : setSpellNames(allSpellNames)
+        }
+        // console.log(filteredData)
+    }, [searched, isFiltered])
+    console.log(list.length)
     return(
         <>
         <div className="container">
@@ -88,8 +121,9 @@ export default function Main(props){
                 removePreparedSpell={props.removePreparedSpell}
             />}
             <Filter handleClick={setSpellFilter} loaded={setSpellsLoaded} />
+            <SearchBar searched={searched} setSearched={setSearched} />
             {spellsLoaded <= numOfSpells - 1 && <Loading />}
-            {list}
+            {list.length > 0 ? list : <h1>No Results</h1>}
         </div>
         </>
     )

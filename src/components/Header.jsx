@@ -35,7 +35,10 @@ export default function Header(props){
         <header className="header">
             <img src ={Logo} alt="D&D Logo" className="logo"/>
             {windowWidth > 1000 ? <h1>Dungeons & Dragons Spell List</h1>:
-            <h1>Spell List</h1>}
+            windowWidth > 400 ? <h1>Spell List</h1> : 
+            <h1>Spells</h1>
+            }
+            
             {props.userUID ? 
                 <p className="log-out-btn" onClick={handleLogOut}>Log Out</p>:
                 <p className="log-in-btn" onClick={() => setShowLogInModal(prevState => !prevState)}>Log In</p>

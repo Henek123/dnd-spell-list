@@ -1,5 +1,4 @@
 import { initializeApp } from "firebase/app";
-// import { getAnalytics } from "firebase/analytics";
 import { getAuth } from "firebase/auth";
 import './App.css';
 import Main from "./components/Main.jsx";
@@ -48,7 +47,7 @@ function App() {
   //saving data to firestore
   React.useEffect(() =>{
     if(userUID){
-      const docRef = doc(db ,userUID, "saved-spells");
+      const docRef = doc(db, userUID, "saved-spells");
       const data = {spells: savedSpells};
       setDoc(docRef, data)
     }
@@ -58,6 +57,7 @@ function App() {
   React.useEffect(() =>{
     if(userUID){
       const docRef = doc(db, userUID, "prepared-spells");
+      console.log(docRef)
       const data = {prepared: preparedSpells};
       setDoc(docRef, data)
     }
@@ -74,11 +74,9 @@ function App() {
         const docSnapPrepared = await getDoc(docRefPrepared);
       if (docSnapSaved.exists()) {
         setSavedSpells(docSnapSaved.data().spells)
-        console.log(docSnapSaved.data())
       }
       if(docSnapPrepared.exists()){
         setPreparedSpells(docSnapPrepared.data().prepared)
-        console.log(docSnapPrepared.data())
       }
       }
     }) ();

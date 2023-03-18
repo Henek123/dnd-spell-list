@@ -1,0 +1,25 @@
+.search-bar{
+    width: 43.5%;
+    height: 2em;
+    border-radius: 20px;
+    font-size: 18px;
+    box-sizing: border-box;
+    padding-left: 10px;
+    border: solid 2px darkslategray;
+    box-shadow: 2px 2px 5px grey;
+}
+.search-bar-container{
+    width: 100%;
+    display: flex;
+    justify-content: center;
+}
+@media screen and (max-width: 690px){
+    .search-bar{
+        width: 65%;
+    }
+}
+@media screen and (max-width: 490px){
+    .search-bar{
+        width: 80%;
+    }
+}
