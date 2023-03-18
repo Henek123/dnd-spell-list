@@ -57,8 +57,9 @@ export default function Main(props){
             } else{
                 setIsFiltered(false)
             }
-            setAllFilteredSpells(result)
-            setSpellNames(result);
+            searched === "" && setSpellNames(result);
+            setAllFilteredSpells(result);
+            // isFiltered && search();
         }
     }, [filteredSpellsResults.called, filteredSpellsResults.data, filteredSpellsResults.loading])
     React.useEffect(() => {
@@ -90,7 +91,7 @@ export default function Main(props){
         let filteredData
         if(searched !== ""){
             if(isFiltered){
-                filteredData = spellNames.filter((spell) => {
+                filteredData = allFilteredSpells.filter((spell) => {
                     return spell.toLowerCase().includes(searched)
                 }
                 )
@@ -105,9 +106,7 @@ export default function Main(props){
         } else{
             isFiltered ? setSpellNames(allFilteredSpells) : setSpellNames(allSpellNames)
         }
-        // console.log(filteredData)
-    }, [searched, isFiltered])
-    console.log(list.length)
+    }, [searched, isFiltered, spellFilter, allFilteredSpells])
     return(
         <>
         <div className="container">
