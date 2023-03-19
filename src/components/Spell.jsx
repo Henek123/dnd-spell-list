@@ -88,7 +88,7 @@ export default function Spell(props){
                 <h2>
                     {props.saved && <input checked={isPrepared} onChange={prepared} className="prepared" title="Is prepared" type="checkbox" />}
                     {props.savedSpells.includes(spell.name) ? 
-                        <span title="Remove from saved spells" className="red add-remove-top" onClick={() => {props.removeSavedSpell(spell.name); props.removePreparedSpell(spell.name)}}>—</span>:
+                        <span title="Remove from saved spells" className="red add-remove-top" onClick={() => {props.removeSavedSpell(spell.name); if(isPrepared) props.removePreparedSpell(spell.name)}}>—</span>:
                         <span title="Add to saved spells"className="green add-remove-top" onClick={() => {props.addSavedSpell(spell.name)}}>+</span> 
                     }
                     {spell.name}

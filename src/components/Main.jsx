@@ -10,11 +10,12 @@ import SearchBar from "./SearchBar.jsx";
 
 export default function Main(props){
     const limit = 1000;
-
+    const [searched, setSearched] = React.useState("");
+    
     React.useEffect(() =>{
-
+        
     }, [])
-
+    
     //getting list of all spells
     const GET_SPELLS= gql`
     query {
@@ -32,9 +33,10 @@ export default function Main(props){
             spellIndex.sort();
             setNumOfSpells(spellIndex.length)
             setAllSpellNames(spellIndex)
-            }
+            setSpellNames(spellIndex)
+        }
     }, [spells.called, spells.loading])
-
+    
     //getting filtered spells list
     const GET_SPELLS_BY_FILTER= gql`
         query GetFilteredSpells($class: StringFilter, $level: IntFilter) {
@@ -44,6 +46,7 @@ export default function Main(props){
     }
     
     `;
+    // console.log(spellNames)
     const [filteredSpells, filteredSpellsResults] = useLazyQuery(GET_SPELLS_BY_FILTER);
     const [spellFilter, setSpellFilter] = React.useState(null);
     const [isFiltered, setIsFiltered] = React.useState(false);
@@ -57,15 +60,15 @@ export default function Main(props){
             } else{
                 setIsFiltered(false)
             }
-            searched === "" && setSpellNames(result);
+            if(searched === "") setSpellNames(result);
             setAllFilteredSpells(result);
             // isFiltered && search();
         }
     }, [filteredSpellsResults.called, filteredSpellsResults.data, filteredSpellsResults.loading])
     React.useEffect(() => {
-      filteredSpells(spellFilter)
+        filteredSpells(spellFilter)
     }, [spellFilter])
-
+    
     //setting loading screen
     const [spellsLoaded, setSpellsLoaded] = React.useState(0);
     const [numOfSpells, setNumOfSpells] = React.useState(0);
@@ -73,20 +76,19 @@ export default function Main(props){
     //mapping spell list
     const list = spellNames.map(spell => (
         <Spell 
-            key={spell} 
-            nameSpell={spell} 
-            loaded={setSpellsLoaded} 
-            savedSpells={props.savedSpells}
-            addSavedSpell={props.addSavedSpell}
-            removeSavedSpell={props.removeSavedSpell}
+        key={spell} 
+        nameSpell={spell} 
+        loaded={setSpellsLoaded} 
+        savedSpells={props.savedSpells}
+        addSavedSpell={props.addSavedSpell}
+        removeSavedSpell={props.removeSavedSpell}
         />
-    ))
-    //hide scroll in main if modal is open
+        ))
+        //hide scroll in main if modal is open
     React.useEffect(() => {
         props.showOverlay ? document.body.style.overflow = 'hidden' : document.body.style.overflow = ''
     }, [props.showOverlay])
-
-    const [searched, setSearched] = React.useState("");
+    
     React.useEffect(() => {
         let filteredData
         if(searched !== ""){
@@ -121,7 +123,7 @@ export default function Main(props){
             />}
             <Filter handleClick={setSpellFilter} loaded={setSpellsLoaded} />
             <SearchBar searched={searched} setSearched={setSearched} />
-            {spellsLoaded <= numOfSpells - 1 && <Loading />}
+            {(spellsLoaded <= numOfSpells - 1 || allSpellNames.length ===0) && <Loading />}
             {list.length > 0 ? list : <h1>No Results</h1>}
         </div>
         </>
