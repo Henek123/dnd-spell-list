@@ -63,7 +63,7 @@ export default function Spell(props){
                 <>
                     <h3>Higher Level:</h3>
                     <hr />
-                    <p>{spell.higher_level}</p>
+                    <p className="description" >{spell.higher_level}</p>
                 </>
             )
         }
@@ -91,7 +91,7 @@ export default function Spell(props){
                         <span title="Remove from saved spells" className="red add-remove-top" onClick={() => {props.removeSavedSpell(spell.name); if(isPrepared) props.removePreparedSpell(spell.name)}}>—</span>:
                         <span title="Add to saved spells"className="green add-remove-top" onClick={() => {props.addSavedSpell(spell.name)}}>+</span> 
                     }
-                    {spell.name}
+                    <span className="spell-name">{spell.name}</span>
                 </h2>
                 <p style={{fontStyle: "italic"}}>
                     {level(spell.level) + " "}
@@ -114,7 +114,7 @@ export default function Spell(props){
                         item.name + " "
                         ))}</p>}
 
-                    <p>{spell.desc}</p>
+                    <p className="description" >{spell.desc}</p>
                     {spell.higher_level && getHigerLevel()}
                     <hr className="bottom-line"/>
                     {props.savedSpells.includes(spell.name) ? 

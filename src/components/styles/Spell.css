@@ -9,7 +9,7 @@ h2{
 }
 .spell-card{
     width: 21%;
-    min-width: 300px;
+    min-width: 260px;
     background-color: rgb(235, 235, 235);
     display: flex;
     flex-direction: column;
@@ -20,6 +20,13 @@ h2{
     height: 100%;
     box-shadow: 2px 2px 5px grey;
     transition: 600ms ease-out;
+}
+.description{
+    text-align: justify;
+}
+.spell-name{
+    max-width: 90%;
+    display: inline-block;
 }
 span{
     font-weight: 600;
@@ -83,6 +90,15 @@ hr{
 }
 @media screen and (max-width: 760px){
     .spell-card{
-        width: 70%;
+        max-width: 500px;
+        width: 80%;
+    }
+}
+@media screen and (max-width: 400px){
+    .spell-card > p{
+        font-size: 14px;
+    }
+    .spell-name{
+        font-size: 22px;
     }
 }
