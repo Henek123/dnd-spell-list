@@ -63,7 +63,7 @@ export default function Spell(props){
                 <>
                     <h3>Higher Level:</h3>
                     <hr />
-                    <p className="description" >{spell.higher_level}</p>
+                    <p className="description" >{spell.higher_level.map(element => <p>{element}</p>)}</p>
                 </>
             )
         }
@@ -78,7 +78,7 @@ export default function Spell(props){
         } else{
             props.removePreparedSpell(spell.name);
         }
-    }
+    } 
     React.useEffect(() => {
         if(props.preparedSpells && props.preparedSpells.includes(spell.name)) setIsPrepared(true);
     })
@@ -114,7 +114,7 @@ export default function Spell(props){
                         item.name + " "
                         ))}</p>}
 
-                    <p className="description" >{spell.desc}</p>
+                    <p className="description" >{spell.desc.map(element => <p>{element}</p>)}</p>
                     {spell.higher_level && getHigerLevel()}
                     <hr className="bottom-line"/>
                     {props.savedSpells.includes(spell.name) ? 
