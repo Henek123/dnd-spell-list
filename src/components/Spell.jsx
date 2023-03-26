@@ -114,7 +114,7 @@ export default function Spell(props){
                         item.name + " "
                         ))}</p>}
 
-                    <p className="description" >{spell.desc.map(element => <p>{element}</p>)}</p>
+                    <p className="description" >{spell.desc && spell.desc.map(element => <p>{element}</p>)}</p>
                     {spell.higher_level && getHigerLevel()}
                     <hr className="bottom-line"/>
                     {props.savedSpells.includes(spell.name) ? 
