@@ -3,10 +3,6 @@ import './styles/SearchBar.css'
 
 export default function SearchBar(props) {
     const [searchInput, setSearchInput] = React.useState(null)
-    // function handleChange(event){
-    //     props.setSearched(event.target.value.toLowerCase())
-    // }
-
     function handleChange(event){
         setSearchInput(event.target.value)
     }
