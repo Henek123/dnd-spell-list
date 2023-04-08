@@ -84,7 +84,7 @@ export default function Main(props){
         removeSavedSpell={props.removeSavedSpell}
         />
         ))
-        //hide scroll in main if modal is open
+    //hide scroll in main if modal is open
     React.useEffect(() => {
         props.showOverlay ? document.body.style.overflow = 'hidden' : document.body.style.overflow = ''
     }, [props.showOverlay])
