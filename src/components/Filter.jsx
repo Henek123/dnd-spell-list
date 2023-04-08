@@ -7,6 +7,10 @@ export default function LevelFilter(props) {
 
   //filtering spells
   function filterSpells(){
+    
+  }
+
+  React.useEffect(() => {
     let temp = {
       variables: {
         "level": levelFilter ?  Number(levelFilter) : null,
@@ -14,7 +18,7 @@ export default function LevelFilter(props) {
       }
     }
     props.handleClick(temp)
-  }
+  }, [levelFilter, classFilter])
 
   //resetting filters
   function resetFilters(){
@@ -45,7 +49,9 @@ export default function LevelFilter(props) {
       <div className="filter-level">
         <p className="filter-label">Level:</p>
         <button 
-          className={levelFilter === "0"  ? "toggled" : undefined} 
+          className={`
+            ${classFilter === "paladin" ? "disabled" : undefined}
+            ${levelFilter === "0"  ? "toggled" : undefined}`} 
           value={0} 
           onClick={setLevel}>
             Cantrips
@@ -138,12 +144,17 @@ export default function LevelFilter(props) {
             Druid
         </button>
         <button
-          disabled={levelFilter === "6" ? true : 
-            levelFilter === "7" ? true : levelFilter === "8" ? true : 
+          disabled={
+            levelFilter === "0" ? true : 
+            levelFilter === "6" ? true : 
+            levelFilter === "7" ? true :
+            levelFilter === "8" ? true : 
             levelFilter === "9" ? true : false
           }  
           className={`
-            ${levelFilter === "6" ? "disabled" : 
+            ${
+              levelFilter === "0" ? "disabled" :
+              levelFilter === "6" ? "disabled" :  
               levelFilter === "7" ? "disabled" : 
               levelFilter === "8" ? "disabled" : 
               levelFilter === "9" ? "disabled" : 
@@ -174,12 +185,6 @@ export default function LevelFilter(props) {
         </button>
       </div>
       <div className="controll-btns">
-        <button className="apply-btn" onClick={() => {
-          filterSpells()
-          // props.loaded(0);
-        }}>
-          Apply
-        </button>
         <button className="clear-btn" onClick={() => {
           resetFilters()
           // props.loaded(0);

@@ -60,12 +60,11 @@ button:hover{
     display: flex;
     justify-content: center;
 }
-.apply-btn,
 .clear-btn{
     background-color: rgb(50, 59, 76);
     color: whitesmoke;
     border-color: black;
-    width: 30%;
+    width: 100%;
     min-width: 140px;
     max-width: 420px;
 }
