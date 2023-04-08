@@ -2,7 +2,7 @@ import React from 'react'
 import './styles/SearchBar.css'
 
 export default function SearchBar(props) {
-    const [searchInput, setSearchInput] = React.useState(null)
+    const [searchInput, setSearchInput] = React.useState("")
     function handleChange(event){
         setSearchInput(event.target.value)
     }
