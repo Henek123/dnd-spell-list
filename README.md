@@ -49,7 +49,7 @@ Open [http://localhost:3000](http://localhost:3000) to view it in your browser.
 <img src="./src/img/readme/desktop3.png" alt="Logo" width="100%" height="100%">
 
 ## Mobile view
-<img src="./src/img/readme/mobile1.jpg" alt="Logo" width="30%" height="auto"> <img src="./src/img/readme/mobile2.jpg" alt="Logo" width="30%" height="auto"> <img src="./src/img/readme/mobile2.jpg" alt="Logo" width="30%" height="auto">      
+<img src="./src/img/readme/mobile1.jpg" alt="Logo" width="30%" height="auto"> <img src="./src/img/readme/mobile3.jpg" alt="Logo" width="30%" height="auto"> <img src="./src/img/readme/mobile2.jpg" alt="Logo" width="30%" height="auto">      
 
 
 <!-- CONTACT -->
