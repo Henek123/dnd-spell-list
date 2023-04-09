@@ -66,6 +66,7 @@ export default function SavedSpells(props) {
         preparedSpells={props.preparedSpells}
         addPreparedSpell={props.addPreparedSpell}
         removePreparedSpell={props.removePreparedSpell}
+        expirationDate={localStorage.getItem('!expiration date')}
       />
     ))
     return list

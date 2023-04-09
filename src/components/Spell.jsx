@@ -1,6 +1,6 @@
 import React from "react"
 import "./styles/Spell.css"
-import {useQuery, gql} from "@apollo/client"
+import {useQuery, useLazyQuery, gql} from "@apollo/client"
 import {UnmountClosed} from 'react-collapse';
 
 export default function Spell(props){
@@ -29,8 +29,22 @@ export default function Spell(props){
       }
     }
     `
-    const [spell, setSpell] = React.useState({});
-    const spellName = useQuery(GET_SPELL, {variables: {"name": props.nameSpell}})
+    const [spell, setSpell] = React.useState(0);
+    const [callAPI, spellName] = useLazyQuery(GET_SPELL, {variables: {"name": props.nameSpell}})
+    React.useEffect(() => {
+        if(props.expirationDate > new Date().getTime() && localStorage.getItem(`${props.nameSpell}`)){
+            setSpell(JSON.parse(localStorage.getItem(props.nameSpell)))
+            if(props.loaded){
+                props.loaded(prevState => prevState + 1)
+            }
+        } else{
+            console.log('calling api')
+            if(props.nameSpell === "Fireball" && props.expirationDate < new Date().getTime()){
+                props.setExpirationDate()
+            }
+            callAPI()
+        }
+    }, [])
     React.useEffect(() =>{
         if(spellName.called && spellName.loading === false){
             let index = spellName.data.spells.findIndex((spell) => spell.name === props.nameSpell)
@@ -40,6 +54,12 @@ export default function Spell(props){
             }
         }
     }, [spellName.called, spellName.loading])
+    
+    React.useEffect(() => {
+        if(props.expirationDate > new Date().getTime() && !localStorage.getItem(`${props.nameSpell}`) && spell !== 0){
+            localStorage.setItem(props.nameSpell, JSON.stringify(spell));
+        }
+    },[spell])
     
     //toggling visibility of spell card
     const [visibility, setVisibility] = React.useState(false);
@@ -63,7 +83,7 @@ export default function Spell(props){
                 <>
                     <h3>Higher Level:</h3>
                     <hr />
-                    <p className="description" >{spell.higher_level.map(element => <p>{element}</p>)}</p>
+                    <p className="description" >{spell.higher_level.map(element => <p key={element}>{element}</p>)}</p>
                 </>
             )
         }
@@ -82,7 +102,6 @@ export default function Spell(props){
     React.useEffect(() => {
         if(props.preparedSpells && props.preparedSpells.includes(spell.name)) setIsPrepared(true);
     })
-    
     return(
             <div className={`spell-card ${props.saved ? "disable-box-shadow" : ""}`}>
                 <h2>
@@ -114,7 +133,7 @@ export default function Spell(props){
                         item.name + " "
                         ))}</p>}
 
-                    <p className="description" >{spell.desc && spell.desc.map(element => <p>{element}</p>)}</p>
+                    <p className="description" >{spell.desc && spell.desc.map(element => <p key={element}>{element}</p>)}</p>
                     {spell.higher_level && getHigerLevel()}
                     <hr className="bottom-line"/>
                     {props.savedSpells.includes(spell.name) ? 

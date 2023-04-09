@@ -57,7 +57,6 @@ function App() {
   React.useEffect(() =>{
     if(userUID){
       const docRef = doc(db, userUID, "prepared-spells");
-      console.log(docRef)
       const data = {prepared: preparedSpells};
       setDoc(docRef, data)
     }

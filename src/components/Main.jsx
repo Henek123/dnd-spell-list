@@ -36,7 +36,12 @@ export default function Main(props){
             setSpellNames(spellIndex)
         }
     }, [spells.called, spells.loading])
-    
+
+    //setting expiration date
+    function setExpirationDate(){
+        const expirationDate = new Date().getTime() + 1000 * 60 * 60 * 24 * 30;
+        localStorage.setItem('!expiration date', JSON.stringify(expirationDate))
+    }
     //getting filtered spells list
     const GET_SPELLS_BY_FILTER= gql`
         query GetFilteredSpells($class: StringFilter, $level: IntFilter) {
@@ -46,7 +51,6 @@ export default function Main(props){
     }
     
     `;
-    // console.log(spellNames)
     const [filteredSpells, filteredSpellsResults] = useLazyQuery(GET_SPELLS_BY_FILTER);
     const [spellFilter, setSpellFilter] = React.useState(null);
     const [isFiltered, setIsFiltered] = React.useState(false);
@@ -62,13 +66,11 @@ export default function Main(props){
             }
             if(searched === "") setSpellNames(result);
             setAllFilteredSpells(result);
-            // isFiltered && search();
         }
     }, [filteredSpellsResults.called, filteredSpellsResults.data, filteredSpellsResults.loading])
     React.useEffect(() => {
         filteredSpells(spellFilter)
     }, [spellFilter])
-    
     //setting loading screen
     const [spellsLoaded, setSpellsLoaded] = React.useState(0);
     const [numOfSpells, setNumOfSpells] = React.useState(0);
@@ -76,12 +78,14 @@ export default function Main(props){
     //mapping spell list
     const list = spellNames.map(spell => (
         <Spell 
-        key={spell} 
-        nameSpell={spell} 
-        loaded={setSpellsLoaded} 
-        savedSpells={props.savedSpells}
-        addSavedSpell={props.addSavedSpell}
-        removeSavedSpell={props.removeSavedSpell}
+            key={spell} 
+            nameSpell={spell} 
+            loaded={setSpellsLoaded} 
+            savedSpells={props.savedSpells}
+            addSavedSpell={props.addSavedSpell}
+            removeSavedSpell={props.removeSavedSpell}
+            setExpirationDate={setExpirationDate}
+            expirationDate={localStorage.getItem('!expiration date')}
         />
         ))
     //hide scroll in main if modal is open
