@@ -56,10 +56,18 @@ export default function Main(props){
     const [isFiltered, setIsFiltered] = React.useState(false);
     const [allFilteredSpells, setAllFilteredSpells] = React.useState();
     React.useEffect(() =>{
-        if(filteredSpellsResults.called === true && filteredSpellsResults.loading === false && filteredSpellsResults.data){
+        if(
+            filteredSpellsResults.called === true &&
+            filteredSpellsResults.loading === false &&
+            filteredSpellsResults.data
+        ){
             let result = filteredSpellsResults.data.spells.map(item => item.name);
             result.sort()
-            if(spellFilter !== null && (spellFilter.variables.class !== null || spellFilter.variables.level !== null)){
+            if(
+                spellFilter !== null &&
+                (spellFilter.variables.class !== null ||
+                spellFilter.variables.level !== null)
+            ){
                 setIsFiltered(true);
             } else{
                 setIsFiltered(false)
