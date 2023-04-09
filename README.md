@@ -12,14 +12,16 @@
 ## About The Project
 
 dnd-spell-list is a website made in React. Spell list is fetched with the help of GraphQL and Apollo Client from D&D 5e API. 
-* When the page is opened, it shows a loading screen until all spells are downloaded from the API.
+* When the page is opened, it shows a loading screen until all spells are loaded.
 * After first download spells are stored in cache memory.
 * Each spell has own extentable card.
 * User can show saved spells by clicking button.
 * User can create account to save spells to Firestore.
 * After login in list of previously saved spells is loaded from Firestore.
 * User can use buttons at the top of the webiste to filter throught spells.
-* Any combination of Paladin class and level 6, 7, 8, 9 filters is disabled because he has no spells higher than level 5.
+* User can search for spell by it's name.
+* Any combination of Paladin class and level 6, 7, 8, 9 and cantrips filters is disabled because he has no spells higher than level 5 and cantrips.
+* Due to low possibility of data updating in API response is chaced in local storage with the expiration date of 1 month.
 
 
 ## Available Scripts
