@@ -126,18 +126,28 @@ export default function Spell(props){
                 </p>
                 <UnmountClosed isOpened={visibility}>
                     <hr style={{margin: "1em 0"}} />
-                    <p><span>Casting Time:</span> {spell.casting_time}</p>
-                    <p><span>Range:</span> {spell.range}</p>
+                    <p><span>Casting Time:</span> {spell.casting_time}.</p>
+                    <p><span>Range:</span> {spell.range}.</p>
 
-                    {spell.components ? <p><span>Components:</span> {spell.components.map(item => `${item} `)}</p> :
+                    {spell.components ? <p><span>Components:</span> {spell.components.map(item => {
+                        if(item === spell.components[spell.components.length - 1]){
+                            return item + '.'
+                        } else{
+                            return item + ', '
+                        }
+                    })}</p> :
                     <p><span>Components:</span> "None"</p>}
 
-                    <p><span>Materials:</span> {spell.material ? spell.material : "None"}</p>
-                    <p><span>Duration:</span> {spell.duration} {spell.concentration && "Concentration"}</p>
+                    <p><span>Materials:</span> {spell.material ? spell.material : "None."}</p>
+                    <p><span>Duration:</span> {spell.duration}{!spell.concentration && '.'} {spell.concentration && "Concentration."}</p>
 
-                    {spell.classes && <p style={{marginBottom: "1.5em"}}><span>Classes:</span> {spell.classes.map(item => (
-                        item.name + " "
-                        ))}</p>}
+                    {spell.classes && <p style={{marginBottom: "1.5em"}}><span>Classes:</span> {spell.classes.map(item => {
+                        if(item.name === spell.classes[spell.classes.length - 1].name){
+                            return item.name + '.'
+                        } else{
+                            return item.name + ", "
+                        }
+                    })}</p>}
 
                     <p className="description" >{spell.desc && spell.desc.map(element => <p key={element}>{element}</p>)}</p>
                     {spell.higher_level && getHigerLevel()}
