@@ -1,0 +1,12 @@
+footer{
+  width: 100%;
+  background-color: rgb(50, 59, 76);
+  color: whitesmoke;
+  height: 40px;
+  display: flex;
+  justify-content: flex-end;
+  align-items: center;
+}
+.signature{
+  margin-right: 10px;
+}

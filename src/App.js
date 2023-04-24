@@ -5,6 +5,7 @@ import Main from "./components/Main.jsx";
 import Header from "./components/Header.jsx";
 import React from 'react';
 import { getFirestore, doc, setDoc, getDoc } from "firebase/firestore";
+import Footer from "./components/Footer.jsx";
 
 
 
@@ -120,6 +121,7 @@ function App() {
         setShowOverlay={setShowOverlay}
         toggleOverlay={toggleVisibility}
       />
+      <Footer />
     </>
   );
 }

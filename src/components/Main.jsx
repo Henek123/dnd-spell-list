@@ -7,7 +7,6 @@ import Loading from "./Loading.jsx";
 import SavedSpells from "./SavedSpells.jsx";
 import SearchBar from "./SearchBar.jsx";
 
-
 export default function Main(props){
     const limit = 1000;
     const [searched, setSearched] = React.useState("");
@@ -122,7 +121,6 @@ export default function Main(props){
         }
     }, [searched, isFiltered, spellFilter, allFilteredSpells])
     return(
-        <>
         <div className="container">
             <p id="anchor"></p>
             {props.showOverlay && <SavedSpells 
@@ -138,6 +136,5 @@ export default function Main(props){
             {(spellsLoaded <= numOfSpells - 1 || allSpellNames.length ===0) && <Loading />}
             {list.length > 0 ? list : <h1>No Results</h1>}
         </div>
-        </>
     )
 }

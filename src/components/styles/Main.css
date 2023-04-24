@@ -1,9 +1,10 @@
 .container{
     display: flex;
+    flex-direction: row;
     flex-wrap: wrap;
     justify-content: center;
     background-color: whitesmoke;
-    
+    align-content: flex-start;
 }
 body{
     background-color: whitesmoke;
