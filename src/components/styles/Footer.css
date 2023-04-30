@@ -6,6 +6,8 @@ footer{
   display: flex;
   justify-content: flex-end;
   align-items: center;
+  /* position: fixed;
+  bottom: 0; */
 }
 .signature{
   margin-right: 10px;

@@ -7,8 +7,6 @@ import React from 'react';
 import { getFirestore, doc, setDoc, getDoc } from "firebase/firestore";
 import Footer from "./components/Footer.jsx";
 
-
-
 function App() {
   const [userUID, setUserUID] = React.useState(false)
 
