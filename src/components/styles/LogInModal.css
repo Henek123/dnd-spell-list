@@ -28,11 +28,16 @@
     box-shadow: 2px 2px 5px grey;
 }
 .modal button{
-    width: 70%;
+    cursor: pointer;
+    width: 80%;
+    height: 2em;
+    margin: 0.5em;
     color: white;
     background-color: rgb(24, 168, 22);
     border: unset;
     border-radius: 20px;
+    font-size: 18px;
+    font-weight: 600;
 }
 .modal .close-btn{
     position: static;
