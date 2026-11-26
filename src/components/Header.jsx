@@ -8,6 +8,7 @@ import { signOut } from "firebase/auth";
 export default function Header(props){
     const [windowWidth, setWindowWidth] = React.useState(window.innerWidth)
     const [showLogInModal, setShowLogInModal] = React.useState(false);
+    const [authActionError, setAuthActionError] = React.useState(null);
 
     //checking for windows width
     React.useEffect(() => {
@@ -22,13 +23,14 @@ export default function Header(props){
     }, [])
 
     //handling logout
-    function handleLogOut(){
-        signOut(props.auth).then(() => {
+    async function handleLogOut(){
+        setAuthActionError(null);
+        try {
+            await signOut(props.auth);
             props.setUserUID(false);
-            props.setSavedSpells([])
-        }).catch((error) => {
-            console.log(error)
-        });
+        } catch (error) {
+            setAuthActionError(error);
+        }
     }
     return(
         <>
@@ -39,13 +41,21 @@ export default function Header(props){
             <h1>Spells</h1>
             }
             
-            {props.userUID ? 
-                <p className="log-out-btn" onClick={handleLogOut}>Log Out</p>:
-                <p className="log-in-btn" onClick={() => setShowLogInModal(prevState => !prevState)}>Log In</p>
+            {props.authLoading ? <span className="auth-status">Checking account…</span> :
+            props.userUID ? 
+                <button type="button" className="log-out-btn" onClick={handleLogOut}>Log Out</button>:
+                <button type="button" className="log-in-btn" onClick={() => setShowLogInModal(true)}>Log In</button>
             }
-            <p className="saved-spells-btn" onClick={!showLogInModal ? props.toggleOverlay : undefined}>{props.showOverlay ? "Hide Saved Spells" : "Show Saved Spells"}</p>
+            <button
+                type="button"
+                className="saved-spells-btn"
+                aria-expanded={props.showOverlay}
+                disabled={showLogInModal || props.authLoading}
+                onClick={props.toggleOverlay}
+            >{props.showOverlay ? "Hide Saved Spells" : "Show Saved Spells"}</button>
             <a className="return-btn" href="#anchor">Return To Top</a>
         </header>
+        {authActionError && <p className="auth-error" role="alert">Couldn’t sign out. Please try again.</p>}
         {showLogInModal && 
             <LogInModal 
                 setShowLogInModal={setShowLogInModal} 

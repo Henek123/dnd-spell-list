@@ -1,245 +1,85 @@
 import React from 'react'
 import "./styles/SavedSpell.css"
 import Spell from './Spell'
-import {useQuery, gql} from "@apollo/client"
 
 export default function SavedSpells(props) {
+  const [expandedLevels, setExpandedLevels] = React.useState({});
+  const savedSpellNames = React.useMemo(
+    () => new Set(props.savedSpells),
+    [props.savedSpells]
+  );
+  const levels = React.useMemo(() => {
+    const savedSpells = props.spellList
+      .filter(spell => savedSpellNames.has(spell.name))
+      .sort((first, second) => first.level - second.level);
 
-  const GET_SPELL = gql`
-    query {
-      spells(limit: 1000){
-        level
-        name
-      }
-    }
-  `
-  const [spellList, setSpellList] = React.useState(null);
-
-  const spell = useQuery(GET_SPELL)
-  React.useEffect(() =>{
-    if(spell.called && spell.loading === false){
-        setSpellList(spell.data.spells)
-    }
-  }, [spell.called, spell.loading, props.savedSpells])
+    return Array.from({length: 10}, (_, level) => ({
+      level,
+      title: level === 0 ? "Cantrips" : `Level ${level}`,
+      spells: savedSpells.filter(spell => spell.level === level)
+    }));
+  }, [props.spellList, savedSpellNames]);
 
   React.useEffect(() => {
-    if(spellList){
-      let temp =[]
-      for(let i = 0; i < props.savedSpells.length; i++){
-        for(let j = 0; j < spellList.length; j++){
-          if(props.savedSpells[i] === spellList[j].name){
-            temp.push(spellList[j])
-            break;
-          }
-        }
-      }
-      temp.sort((a, b) => a.level - b.level)
-      setSortedSpellList(temp);
-      temp =[];
-    }
-  },[spellList, props.savedSpells])
-  const [sortedSpellList, setSortedSpellList] = React.useState([]);
-  React.useEffect(() => {
-    if(props.savedSpells.length === 0){
-      setShowCantrips(false);
-      setShowLevel1(false);
-      setShowLevel2(false);
-      setShowLevel3(false);
-      setShowLevel4(false);
-      setShowLevel5(false);
-      setShowLevel6(false);
-      setShowLevel7(false);
-      setShowLevel8(false);
-      setShowLevel9(false);
-    }
-  },[props.savedSpells])
+    if (props.savedSpells.length === 0) setExpandedLevels({});
+  }, [props.savedSpells]);
 
-  function getList(level){
-    const filteredList = sortedSpellList.filter((spell) => spell.level === level)
-    const list = filteredList.map((spell) => (
+  function getSpellCards(spells) {
+    return spells.map(spell => (
       <Spell
         saved={true}
-        key={spell.name} 
-        nameSpell={spell.name} 
-        savedSpells={props.savedSpells} 
+        key={spell.index}
+        spellIndex={spell.index}
+        nameSpell={spell.name}
+        level={spell.level}
+        savedSpells={props.savedSpells}
         removeSavedSpell={props.removeSavedSpell}
         preparedSpells={props.preparedSpells}
         addPreparedSpell={props.addPreparedSpell}
         removePreparedSpell={props.removePreparedSpell}
-        expirationDate={localStorage.getItem('!expiration date')}
+        canEditSavedSpells={props.canEditSavedSpells}
       />
-    ))
-    return list
+    ));
   }
 
-  function showLine(level){
-    let arr = [cantrips, level1, level2, level3, level4, level5, level6, level7, level8, level9];
-    let counter = 0;
-    for (let i = level + 1; i < 10; i++){
-      if(arr[i].length !== 0) counter++
-    }
-    if(counter > 0){
-      counter = 0;
-      return true;
-    }
-    return false;
-  }
-
-  const [showCantrips, setShowCantrips] = React.useState(false);
-  const [showLevel1, setShowLevel1] = React.useState(false);
-  const [showLevel2, setShowLevel2] = React.useState(false);
-  const [showLevel3, setShowLevel3] = React.useState(false);
-  const [showLevel4, setShowLevel4] = React.useState(false);
-  const [showLevel5, setShowLevel5] = React.useState(false);
-  const [showLevel6, setShowLevel6] = React.useState(false);
-  const [showLevel7, setShowLevel7] = React.useState(false);
-  const [showLevel8, setShowLevel8] = React.useState(false);
-  const [showLevel9, setShowLevel9] = React.useState(false);
-  const cantrips = getList(0);
-  const level1 = getList(1);
-  const level2 = getList(2);
-  const level3 = getList(3);
-  const level4 = getList(4);
-  const level5 = getList(5);
-  const level6 = getList(6);
-  const level7 = getList(7);
-  const level8 = getList(8);
-  const level9 = getList(9);
   return (
-    <section className='overlay'>
-        <div className="overlay-container">
-          <p className="hide-btn" onClick={() => props.setShowOverlay(false)}>X</p>
-          {
-            cantrips.length > 0 &&
-            <h1><span onClick={() => setShowCantrips(prevState => !prevState)}>
-              Cantrips {showCantrips ? "↑" : "↓"}
-            </span></h1>
-          }
-          {showCantrips && cantrips}
-          {
-            (showLine(0) &&
-            showCantrips &&
-            cantrips.length > 0) &&
-            <hr className='divider' />
-          }
+    <section className='overlay' role="dialog" aria-modal="true" aria-label="Saved spells">
+      <div className="overlay-container">
+        <button
+          type="button"
+          className="hide-btn"
+          aria-label="Close saved spells"
+          onClick={() => props.setShowOverlay(false)}
+        >×</button>
+        {levels.map(({level, title, spells}, index) => {
+          if (spells.length === 0) return null;
 
-          {
-            level1.length > 0 &&
-            <h1><span onClick={() => setShowLevel1(prevState => !prevState)}>
-              Level 1 {showLevel1 ? "↑" : "↓"}
-            </span></h1>}
-          {showLevel1 && level1}
-          {
-            (showLine(1) &&
-            showLevel1 &&
-            level1.length > 0) &&
-            <hr className='divider' />
-          }
+          const expanded = Boolean(expandedLevels[level]);
+          const hasHigherLevelSpells = levels
+            .slice(index + 1)
+            .some(nextLevel => nextLevel.spells.length > 0);
 
-          {
-            level2.length > 0 &&
-            <h1><span onClick={() => setShowLevel2(prevState => !prevState)}>
-              Level 2 {showLevel2 ? "↑" : "↓"}
-            </span></h1>}
-          {showLevel2 && level2}
-          {
-            (showLine(2) &&
-            showLevel2 &&
-            level2.length > 0) &&
-            <hr className='divider' />
-          }
-
-          {
-            level3.length > 0 &&
-            <h1><span onClick={() => setShowLevel3(prevState => !prevState)}>
-              Level 3 {showLevel3 ? "↑" : "↓"}
-            </span></h1>}
-          {showLevel3 && level3}
-          {
-            (showLine(3) &&
-            showLevel3 &&
-            level3.length > 0) &&
-            <hr className='divider' />
-          }
-
-          {
-            level4.length > 0 &&
-            <h1><span onClick={() => setShowLevel4(prevState => !prevState)}>
-              Level 4 {showLevel4 ? "↑" : "↓"}
-            </span></h1>}
-          {showLevel4 && level4}
-          {
-            (showLine(4) &&
-            showLevel4 &&
-            level4.length > 0) &&
-            <hr className='divider' />
-          }
-
-          {
-            level5.length > 0 &&
-            <h1><span onClick={() => setShowLevel5(prevState => !prevState)}>
-              Level 5 {showLevel5 ? "↑" : "↓"}
-            </span></h1>}
-          {showLevel5 && level5}
-          {
-            (showLine(5) &&
-            showLevel5 &&
-            level5.length > 0) &&
-            <hr className='divider' />
-          }
-
-          {
-            level6.length > 0 &&
-            <h1><span onClick={() => setShowLevel6(prevState => !prevState)}>
-              Level 6 {showLevel6 ? "↑" : "↓"}
-            </span></h1>}
-          {showLevel6 && level6}
-          {
-            (showLine(6) &&
-            showLevel6 &&
-            level6.length > 0) &&
-            <hr className='divider' />
-          }
-
-          {
-            level7.length > 0 &&
-            <h1><span onClick={() => setShowLevel7(prevState => !prevState)}>
-              Level 7 {showLevel7 ? "↑" : "↓"}
-            </span></h1>}
-          {showLevel7 && level7}
-          {
-            (showLine(7) &&
-            showLevel7 &&
-            level7.length > 0) &&
-            <hr className='divider' />
-          }
-
-          {
-            level8.length > 0 &&
-            <h1><span onClick={() => setShowLevel8(prevState => !prevState)}>
-              Level 8 {showLevel8 ? "↑" : "↓"}
-            </span></h1>}
-          {showLevel8 && level8}
-          {
-            (showLine(8) &&
-            showLevel8 &&
-            level8.length > 0) &&
-            <hr className='divider' />
-          }
-
-          {
-            level9.length > 0 &&
-            <h1><span onClick={() => setShowLevel9(prevState => !prevState)}>
-              Level 9 {showLevel9 ? "↑" : "↓"}
-            </span></h1>}
-          {showLevel9 && level9}
-          {
-            (showLine(9) &&
-            showLevel9 &&
-            level9.length > 0) &&
-            <hr className='divider' />
-          }
-        </div>
+          return (
+            <React.Fragment key={level}>
+              <h1>
+                <button
+                  type="button"
+                  className="saved-level-toggle"
+                  aria-expanded={expanded}
+                  onClick={() => setExpandedLevels(current => ({
+                    ...current,
+                    [level]: !current[level]
+                  }))}
+                >
+                  {title} {expanded ? "↑" : "↓"}
+                </button>
+              </h1>
+              {expanded && getSpellCards(spells)}
+              {expanded && hasHigherLevelSpells && <hr className='divider' />}
+            </React.Fragment>
+          );
+        })}
+      </div>
     </section>
   )
 }

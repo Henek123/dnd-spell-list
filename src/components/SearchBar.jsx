@@ -4,11 +4,14 @@ import './styles/SearchBar.css'
 export default function SearchBar(props) {
     const [searchInput, setSearchInput] = React.useState("")
     function handleChange(event){
-        setSearchInput(event.target.value)
+        const value = event.target.value;
+        setSearchInput(value);
+        props.setSearched(value.toLowerCase());
     }
-    React.useEffect(() => {
-        props.setSearched(searchInput.toLowerCase());
-    },[searchInput])
+    function clearSearch(){
+        setSearchInput("");
+        props.setSearched("");
+    }
     return (
         <section className='search-section'>
             <div className="search-bar-container">
@@ -23,10 +26,11 @@ export default function SearchBar(props) {
                     type="text"
                     name="search bar"
                     placeholder="Search..."
+                    aria-label="Search spells"
                     onChange={handleChange}
                     value={searchInput}
                 />
-                <p className='search-clear-btn' onClick={() => setSearchInput("")}>X</p>
+                <button type="button" className='search-clear-btn' aria-label="Clear search" onClick={clearSearch}>×</button>
             </div>
         </section>
   )

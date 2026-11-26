@@ -1,10 +1,10 @@
-*{
+.spell-card{
     font-family: Verdana, Tahoma, sans-serif
 }
 .ReactCollapse--collapse {
     transition: height 500ms;
 }
-h2{
+.spell-card h2{
     margin: 0;
 }
 .spell-card{
@@ -28,32 +28,59 @@ h2{
     max-width: 90%;
     display: inline-block;
 }
-span{
+.spell-card span{
     font-weight: 600;
 }
-p{
+.spell-card p{
     margin: 0.125em;
 }
-hr{
+.spell-card hr{
     width: 100%;
     color: goldenrod;
-    margin-top: -10px;
 }
 .expander{
     float: right;
     font-style: normal;
     user-select: none;
+    width: auto;
+    height: auto;
+    margin: 0;
+    padding: 0;
+    border: 0;
+    border-radius: 0;
+    background: transparent;
+    box-shadow: none;
+    font-size: inherit;
+    color: inherit;
 }
 .expander:hover{
     cursor: pointer;
+    background: transparent;
+    border: 0;
+    color: inherit;
 }
 .add-remove-bottom{
     text-align: center;
     font-weight: 600;
     user-select: none;
 }
-.add-remove-bottom > span{
+.add-remove-bottom button{
     cursor: pointer;
+    width: auto;
+    height: auto;
+    margin: 0;
+    padding: 0;
+    border: 0;
+    border-radius: 0;
+    background: transparent;
+    box-shadow: none;
+    font-size: inherit;
+    color: inherit;
+}
+.add-remove-bottom button:hover{
+    color: inherit;
+    background: transparent;
+    border: 0;
 }
 .add-remove-top{
     font-weight: 600;
@@ -64,6 +91,32 @@ hr{
     z-index: 0;
     top: -12px;
     user-select: none;
+    width: auto;
+    height: auto;
+    margin: 0;
+    padding: 0;
+    border: 0;
+    border-radius: 0;
+    background: transparent;
+    box-shadow: none;
+    line-height: 1;
+}
+.add-remove-top:hover{
+    background: transparent;
+    border: 0;
+}
+.add-remove-top:disabled,
+.add-remove-bottom button:disabled,
+.prepared:disabled{
+    cursor: not-allowed;
+    opacity: 0.55;
+}
+.retry-button{
+    width: auto;
+    height: auto;
+    margin: 0;
+    padding: 0.25em 0.6em;
+    font-size: 0.9em;
 }
 .red{
     color: red;

@@ -18,39 +18,44 @@ export default function Register(props) {
     }))
   }
   const [passwordConfirmation, setPasswordConfirmation] = React.useState(null)
-  const [emailInUse, setEmailInUse] = React.useState(false)
-   //handle register
+  const [registrationError, setRegistrationError] = React.useState(false);
+  const [isSubmitting, setIsSubmitting] = React.useState(false);
 
-   function handleRegister(event){
+  async function handleRegister(event){
     event.preventDefault();
-    setPasswordConfirmation(null)
+    setPasswordConfirmation(null);
+    setRegistrationError(false);
     if(user.password !== user.confirmPassword){
-      setPasswordConfirmation("Passwords are diffrent")
+      setPasswordConfirmation("Passwords do not match.");
       return;
     }
-    createUserWithEmailAndPassword(props.auth, user.email, user.password)
-    .then((userCredential) => {
-    const firebaseUser = userCredential.user;
-    props.setUserUID(firebaseUser.uid)
-    })
-    .catch((error) => {
-      setEmailInUse(true);
-      // const errorCode = error.code;
-      const errorMessage = error.message;
-      console.log(errorMessage)
-  });
+    setIsSubmitting(true);
+    try {
+      const userCredential = await createUserWithEmailAndPassword(
+        props.auth,
+        user.email,
+        user.password
+      );
+      props.setUserUID(userCredential.user.uid);
+      props.setShowLogInModal(false);
+    } catch {
+      setRegistrationError(true);
+    } finally {
+      setIsSubmitting(false);
+    }
   }
 
   return (
-    <>
-      <form onSubmit={(event) => handleRegister(event)}>
+      <form onSubmit={handleRegister}>
         <div className='wrapper'>
           <label htmlFor="e-mail">Your e-mail</label>
-          <p className="close-btn"  onClick={() => props.setShowLogInModal(false)}>X</p>
+          <button type="button" className="close-btn" aria-label="Close" onClick={() => props.setShowLogInModal(false)}>×</button>
         </div>
         <input 
+          id="e-mail"
           type="email"
           name="email"
+          required
           placeholder="e-mail"
           onChange={handleChange}
           value={user.email}
@@ -76,9 +81,8 @@ export default function Register(props) {
           value={user.confirmPassword}
         />
         {passwordConfirmation && <p className="error">{passwordConfirmation}</p>}
-        {emailInUse && <p className="error">E-mail already in use</p>}
-        <button>Sign Up</button>
+        {registrationError && <p className="error" role="alert">Couldn’t create an account. Check your email and password.</p>}
+        <button type="submit" disabled={isSubmitting}>{isSubmitting ? "Creating account…" : "Sign Up"}</button>
       </form>
-    </>
   )
 }

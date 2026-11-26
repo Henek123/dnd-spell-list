@@ -11,7 +11,7 @@
     align-items: center;
     z-index: 20;
 }
-h4{
+.loading-screen h4{
     font-size: 40px;
     color: whitesmoke;
     user-select: none;

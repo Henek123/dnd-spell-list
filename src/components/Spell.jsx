@@ -1,72 +1,42 @@
 import React from "react"
 import "./styles/Spell.css"
-import {useQuery, useLazyQuery, gql} from "@apollo/client"
 import {UnmountClosed} from 'react-collapse';
+import {getSpell} from "../api/spells.js"
 
 export default function Spell(props){
-
-    //getting spell by name
-    const GET_SPELL = gql`
-    query GetSpell($name: String) {
-      spells(name: $name){
-        level
-        material
-        range
-        ritual
-        school {
-          name
-        }
-        components
-        classes {
-          name
-        }
-        desc
-        higher_level
-        duration
-        casting_time
-        concentration
-        name
-      }
-    }
-    `
-    const [spell, setSpell] = React.useState(0);
-    const [callAPI, spellName] = useLazyQuery(GET_SPELL, {variables: {"name": props.nameSpell}})
-    React.useEffect(() => {
-        if(props.expirationDate > new Date().getTime() && localStorage.getItem(`${props.nameSpell}`)){
-            setSpell(JSON.parse(localStorage.getItem(props.nameSpell)))
-            if(props.loaded){
-                props.loaded(prevState => prevState + 1)
-            }
-        } else{
-            console.log('calling api')
-            if(props.nameSpell === "Fireball" && props.expirationDate < new Date().getTime()){
-                props.setExpirationDate()
-            }
-            callAPI()
-        }
-    }, [])
-    React.useEffect(() =>{
-        if(spellName.called && spellName.loading === false){
-            let index = spellName.data.spells.findIndex((spell) => spell.name === props.nameSpell)
-            setSpell(spellName.data.spells[index])
-            if(props.loaded){
-                props.loaded(prevState => prevState + 1)
-            }
-        }
-    }, [spellName.called, spellName.loading])
-    
-    React.useEffect(() => {
-        if(props.expirationDate > new Date().getTime() && !localStorage.getItem(`${props.nameSpell}`) && spell !== 0){
-            localStorage.setItem(props.nameSpell, JSON.stringify(spell));
-        }
-    },[spell])
-    
-    //toggling visibility of spell card
+    const [spell, setSpell] = React.useState(null);
     const [visibility, setVisibility] = React.useState(false);
+    const [isLoading, setIsLoading] = React.useState(false);
+    const [loadError, setLoadError] = React.useState(null);
+    const [retryCount, setRetryCount] = React.useState(0);
+
+    React.useEffect(() => {
+        if (!visibility || spell) return undefined;
+
+        let cancelled = false;
+        setIsLoading(true);
+        setLoadError(null);
+
+        getSpell(props.spellIndex)
+            .then(data => {
+                if (!cancelled) setSpell(data);
+            })
+            .catch(error => {
+                if (!cancelled) setLoadError(error);
+            })
+            .finally(() => {
+                if (!cancelled) setIsLoading(false);
+            });
+
+        return () => {
+            cancelled = true;
+        };
+    }, [visibility, spell, props.spellIndex, retryCount]);
+
     function toggle(){
         setVisibility(prevState => !prevState)
     }
-    
+
     //settling level on spell card
     function level(level){
         if(level === 0) return `Cantrip`
@@ -76,93 +46,121 @@ export default function Spell(props){
         return `${level}th level`
     }
 
-    //setting higer level of a spell
-    function getHigerLevel(){
-        if(spell.higher_level.length !== 0){
-            return (
-                <>
-                    <h3>Higher Level:</h3>
-                    <hr />
-                    <p className="description" >{spell.higher_level.map(element => <p key={element}>{element}</p>)}</p>
-                </>
-            )
-        }
-    }
-
-    const [isPrepared, setIsPrepared] = React.useState(false);
+    const spellName = spell ? spell.name : props.nameSpell;
+    const spellLevel = spell ? spell.level : props.level;
+    const canEditSavedSpells = props.canEditSavedSpells !== false;
+    const isPrepared = props.preparedSpells
+        ? props.preparedSpells.includes(spellName)
+        : false;
+    const detailsId = `spell-details-${props.spellIndex}`;
 
     function prepared(event){
-        setIsPrepared(event.target.checked);
         if(event.target.checked === true){
-            props.addPreparedSpell(spell.name);
+            props.addPreparedSpell(spellName);
         } else{
-            props.removePreparedSpell(spell.name);
+            props.removePreparedSpell(spellName);
         }
     } 
-    React.useEffect(() => {
-        if(props.preparedSpells && props.preparedSpells.includes(spell.name)) setIsPrepared(true);
-    })
+
     return(
             <div className={`spell-card ${props.saved ? "disable-box-shadow" : ""}`}>
                 <h2>
-                    {props.saved && <input checked={isPrepared} onChange={prepared} className="prepared" title="Is prepared" type="checkbox" />}
-                    {props.savedSpells.includes(spell.name) ? 
-                        <span 
+                    {props.saved && <input
+                        checked={isPrepared}
+                        onChange={prepared}
+                        className="prepared"
+                        title="Is prepared"
+                        type="checkbox"
+                        disabled={!canEditSavedSpells}
+                    />}
+                    {props.savedSpells.includes(spellName) ? 
+                        <button
+                            type="button"
                             title="Remove from saved spells" 
                             className="red add-remove-top" 
-                            onClick={() => {props.removeSavedSpell(spell.name); if(isPrepared) props.removePreparedSpell(spell.name)}}
+                            onClick={() => {props.removeSavedSpell(spellName); if(isPrepared) props.removePreparedSpell(spellName)}}
+                            disabled={!canEditSavedSpells}
                         >
                             —
-                        </span>:
-                        <span title="Add to saved spells"className="green add-remove-top" onClick={() => {props.addSavedSpell(spell.name)}}>+</span> 
+                        </button>:
+                        <button
+                            type="button"
+                            title="Add to saved spells"
+                            className="green add-remove-top"
+                            onClick={() => props.addSavedSpell(spellName)}
+                            disabled={!canEditSavedSpells}
+                        >+</button>
                     }
-                    <span className="spell-name">{spell.name}</span>
+                    <span className="spell-name">{spellName}</span>
                 </h2>
                 <p style={{fontStyle: "italic"}}>
-                    {level(spell.level) + " "}
-                    {spell.school && spell.school.name + " "}
-                    {spell.ritual && "Ritual"}
-                    <span className="expander" onClick={toggle}>{visibility ? "Shrink ↑" : "Expand ↓"}</span>
+                    {level(spellLevel) + " "}
+                    {spell && spell.school && spell.school.name + " "}
+                    {spell && spell.ritual && "Ritual"}
+                    <button
+                        type="button"
+                        className="expander"
+                        aria-expanded={visibility}
+                        aria-controls={detailsId}
+                        onClick={toggle}
+                    >{visibility ? "Shrink ↑" : "Expand ↓"}</button>
                 </p>
+                <div id={detailsId}>
                 <UnmountClosed isOpened={visibility}>
-                    <hr style={{margin: "1em 0"}} />
-                    <p><span>Casting Time:</span> {spell.casting_time}.</p>
-                    <p><span>Range:</span> {spell.range}.</p>
+                    {isLoading && <p>Loading spell details...</p>}
+                    {loadError && <p role="alert">
+                        Couldn’t load spell details: {loadError.message}{" "}
+                        <button
+                            type="button"
+                            className="retry-button"
+                            onClick={() => setRetryCount(count => count + 1)}
+                        >Retry</button>
+                    </p>}
+                    {spell && <>
+                        <hr style={{margin: "1em 0"}} />
+                        <p><span>Casting Time:</span> {spell.casting_time}.</p>
+                        <p><span>Range:</span> {spell.range}.</p>
 
-                    {spell.components ? <p><span>Components:</span> {spell.components.map(item => {
-                        if(item === spell.components[spell.components.length - 1]){
-                            return item + '.'
-                        } else{
-                            return item + ', '
+                        {spell.components ? <p><span>Components:</span> {spell.components.map((item, index) =>
+                            `${item}${index === spell.components.length - 1 ? '.' : ', '}`
+                        )}</p> :
+                        <p><span>Components:</span> None</p>}
+
+                        <p><span>Materials:</span> {spell.material ? spell.material : "None."}</p>
+                        <p><span>Duration:</span> {spell.duration}{!spell.concentration && '.'} {spell.concentration && "Concentration."}</p>
+
+                        {spell.classes && <p style={{marginBottom: "1.5em"}}><span>Classes:</span> {spell.classes.map((item, index) =>
+                            `${item.name}${index === spell.classes.length - 1 ? '.' : ', '}`
+                        )}</p>}
+
+                        <div className="description">{spell.desc && spell.desc.map(element => <p key={element}>{element}</p>)}</div>
+                        {spell.higher_level && spell.higher_level.length > 0 && <>
+                            <h3>Higher Level:</h3>
+                            <hr />
+                            <div className="description">{spell.higher_level.map(element => <p key={element}>{element}</p>)}</div>
+                        </>}
+                        <hr className="bottom-line"/>
+                        {props.savedSpells.includes(spellName) ? 
+                            <div className="add-remove-bottom">
+                                <button
+                                    type="button"
+                                    disabled={!canEditSavedSpells}
+                                    onClick={() => {props.removeSavedSpell(spellName); props.removePreparedSpell(spellName)}}
+                                >
+                                    Remove from saved
+                                </button>
+                            </div>:
+                            <div className="add-remove-bottom">
+                                <button
+                                    type="button"
+                                    disabled={!canEditSavedSpells}
+                                    onClick={() => props.addSavedSpell(spellName)}
+                                >Add to saved</button>
+                            </div>
                         }
-                    })}</p> :
-                    <p><span>Components:</span> "None"</p>}
-
-                    <p><span>Materials:</span> {spell.material ? spell.material : "None."}</p>
-                    <p><span>Duration:</span> {spell.duration}{!spell.concentration && '.'} {spell.concentration && "Concentration."}</p>
-
-                    {spell.classes && <p style={{marginBottom: "1.5em"}}><span>Classes:</span> {spell.classes.map(item => {
-                        if(item.name === spell.classes[spell.classes.length - 1].name){
-                            return item.name + '.'
-                        } else{
-                            return item.name + ", "
-                        }
-                    })}</p>}
-
-                    <p className="description" >{spell.desc && spell.desc.map(element => <p key={element}>{element}</p>)}</p>
-                    {spell.higher_level && getHigerLevel()}
-                    <hr className="bottom-line"/>
-                    {props.savedSpells.includes(spell.name) ? 
-                        <p 
-                            className="add-remove-bottom"
-                        >
-                            <span onClick={() => {props.removeSavedSpell(spell.name); props.removePreparedSpell(spell.name)}}>
-                                Remove from saved
-                            </span>
-                        </p>:
-                        <p className="add-remove-bottom"><span onClick={() => {props.addSavedSpell(spell.name)}}>Add to saved</span></p> 
-                    }
+                    </>}
                 </UnmountClosed>
+                </div>
             </div>
     )
 }

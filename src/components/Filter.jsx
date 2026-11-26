@@ -4,33 +4,19 @@ import "./styles/Filter.css"
 export default function LevelFilter(props) {
   const [levelFilter, setLevelFilter] = React.useState(null);
   const [classFilter, setClassFilter] = React.useState(null);
-
-  //filtering spells
-  function filterSpells(){
-    
-  }
+  const {handleClick} = props;
 
   React.useEffect(() => {
-    let temp = {
-      variables: {
-        "level": levelFilter ?  Number(levelFilter) : null,
-        "class": classFilter
-      }
-    }
-    props.handleClick(temp)
-  }, [levelFilter, classFilter])
+    handleClick({
+      level: levelFilter === null ? null : Number(levelFilter),
+      className: classFilter
+    });
+  }, [levelFilter, classFilter, handleClick])
 
   //resetting filters
   function resetFilters(){
     setLevelFilter(null);
     setClassFilter(null)
-    let temp = {
-      variables: {
-        "level": null,
-        "class": null
-      }
-    }
-    props.handleClick(temp)
   }
   
   //setting level filter
@@ -49,6 +35,8 @@ export default function LevelFilter(props) {
       <div className="filter-level">
         <p className="filter-label">Level:</p>
         <button 
+          disabled={classFilter === "paladin"}
+          aria-pressed={levelFilter === "0"}
           className={`
             ${classFilter === "paladin" ? "disabled" : undefined}
             ${levelFilter === "0"  ? "toggled" : undefined}`} 
@@ -57,36 +45,42 @@ export default function LevelFilter(props) {
             Cantrips
         </button>
         <button 
+          aria-pressed={levelFilter === "1"}
           className={levelFilter === "1"  ? "toggled" : undefined} 
           value={1} 
           onClick={setLevel}>
             Level 1
         </button>
         <button 
+          aria-pressed={levelFilter === "2"}
           className={levelFilter === "2"  ? "toggled" : undefined} 
           value={2} 
           onClick={setLevel}>
             Level 2
         </button>
         <button 
+          aria-pressed={levelFilter === "3"}
           className={levelFilter === "3"  ? "toggled" : undefined} 
           value={3} 
           onClick={setLevel}>
             Level 3
         </button>
         <button 
+          aria-pressed={levelFilter === "4"}
           className={levelFilter === "4"  ? "toggled" : undefined} 
           value={4} 
           onClick={setLevel}>
             Level 4
         </button>
         <button 
+          aria-pressed={levelFilter === "5"}
           className={levelFilter === "5"  ? "toggled" : undefined} 
           value={5} 
           onClick={setLevel}>
             Level 5
         </button>
         <button 
+          aria-pressed={levelFilter === "6"}
           disabled={classFilter === "paladin" ? true : false} 
           className={
             `${classFilter === "paladin" ? "disabled" : undefined} 
@@ -96,6 +90,7 @@ export default function LevelFilter(props) {
             Level 6
         </button>
         <button 
+          aria-pressed={levelFilter === "7"}
           disabled={classFilter === "paladin" ? true : false} 
           className={
             `${classFilter === "paladin" ? "disabled" : undefined} 
@@ -105,6 +100,7 @@ export default function LevelFilter(props) {
             Level 7
         </button>
         <button 
+          aria-pressed={levelFilter === "8"}
           disabled={classFilter === "paladin" ? true : false} 
           className={
             `${classFilter === "paladin" ? "disabled" : undefined} 
@@ -114,6 +110,7 @@ export default function LevelFilter(props) {
             Level 8
         </button>
         <button 
+          aria-pressed={levelFilter === "9"}
           disabled={classFilter === "paladin" ? true : false} 
           className={
             `${classFilter === "paladin" ? "disabled" : undefined} 
@@ -126,24 +123,28 @@ export default function LevelFilter(props) {
       <div className="filter-class">
         <p className="filter-label">Class:</p>
         <button 
+          aria-pressed={classFilter === "bard"}
           className={classFilter === "bard"  ? "toggled" : undefined} 
           value="bard" 
           onClick={setClass}>
             Bard
         </button>
         <button 
+          aria-pressed={classFilter === "cleric"}
           className={classFilter === "cleric"  ? "toggled" : undefined} 
           value="cleric" 
           onClick={setClass}>
             Cleric
         </button>
         <button 
+          aria-pressed={classFilter === "druid"}
           className={classFilter === "druid"  ? "toggled" : undefined} 
           value="druid" 
           onClick={setClass}>
             Druid
         </button>
         <button
+          aria-pressed={classFilter === "paladin"}
           disabled={
             levelFilter === "0" ? true : 
             levelFilter === "6" ? true : 
@@ -166,18 +167,21 @@ export default function LevelFilter(props) {
             Paladin
         </button>
         <button 
+          aria-pressed={classFilter === "sorcerer"}
           className={classFilter === "sorcerer"  ? "toggled" : undefined} 
           value="sorcerer" 
           onClick={setClass}>
             Sorcerer
         </button>
         <button 
+          aria-pressed={classFilter === "warlock"}
           className={classFilter === "warlock"  ? "toggled" : undefined} 
           value="warlock" 
           onClick={setClass}>
             Warlock
         </button>
         <button 
+          aria-pressed={classFilter === "wizard"}
           className={classFilter === "wizard"  ? "toggled" : undefined} 
           value="wizard" 
           onClick={setClass}>
@@ -187,7 +191,6 @@ export default function LevelFilter(props) {
       <div className="controll-btns">
         <button className="clear-btn" onClick={() => {
           resetFilters()
-          // props.loaded(0);
         }}>
           Clear
         </button>

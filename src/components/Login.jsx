@@ -18,30 +18,34 @@ export default function Login(props) {
     }))
   }
 
-  //handle login
-  function handleLogin(event){
+  const [error, setError] = React.useState(false);
+  const [isSubmitting, setIsSubmitting] = React.useState(false);
+
+  async function handleLogin(event){
     event.preventDefault();
-    signInWithEmailAndPassword(props.auth, user.email, user.password)
-    .then((userCredential) => {
-      // Signed in 
-      setError(false);
+    setError(false);
+    setIsSubmitting(true);
+    try {
+      const userCredential = await signInWithEmailAndPassword(
+        props.auth,
+        user.email,
+        user.password
+      );
       const firebaseUser = userCredential.user;
       props.setUserUID(firebaseUser.uid)
-      // ...
-    })
-    .catch((error) => {
+      props.setShowLogInModal(false);
+    } catch {
       setError(true);
-    });
+    } finally {
+      setIsSubmitting(false);
+    }
   }
 
-  const [error, setError] = React.useState();
-
   return (
-    <>
-      <form onSubmit={(event) => handleLogin(event)}>
+      <form onSubmit={handleLogin}>
         <div className='wrapper'>
           <label htmlFor="e-mail">Your e-mail</label>
-          <p className="close-btn"  onClick={() => props.setShowLogInModal(false)}>X</p>
+          <button type="button" className="close-btn" aria-label="Close" onClick={() => props.setShowLogInModal(false)}>×</button>
         </div>
         <input 
           id="e-mail"
@@ -63,9 +67,8 @@ export default function Login(props) {
           onChange={handleChange}
           value={user.password}
         />
-        {error && <p className="error">Invalid e-mail or password</p>}
-        <button>Log In</button>
+        {error && <p className="error" role="alert">Couldn’t sign in. Check your email and password.</p>}
+        <button type="submit" disabled={isSubmitting}>{isSubmitting ? "Signing in…" : "Log In"}</button>
       </form>
-    </>
   )
 }

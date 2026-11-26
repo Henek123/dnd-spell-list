@@ -30,6 +30,20 @@
     margin-right: 5px;
     cursor: pointer;
     user-select: none;
+    width: auto;
+    height: auto;
+    padding: 0 4px;
+    border: 0;
+    border-radius: 0;
+    background: transparent;
+    box-shadow: none;
+    font-size: inherit;
+    line-height: 1;
+}
+.search-clear-btn:hover{
+    color: inherit;
+    background: transparent;
+    border: 0;
 }
 .search-bar:focus{
     outline: none;

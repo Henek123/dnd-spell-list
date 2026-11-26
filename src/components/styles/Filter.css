@@ -14,7 +14,7 @@
     margin-top: 30px;
     margin-bottom: 20px;
 }
-button{
+.filters button{
     width: 120px;
     cursor: pointer;
     margin: 0.5em;
@@ -28,12 +28,12 @@ button{
 .filter-class > button{
     width: 180px;
 }
-button:hover{
+.filters button:hover{
     color:whitesmoke;
     background-color: darkgrey;;
     border: 2px solid black;
 }
-.toggled{
+.filters .toggled{
     color:whitesmoke;
     background-color: darkgrey;;
     border: 2px solid black;
@@ -62,13 +62,12 @@ button:hover{
 }
 .clear-btn{
     background-color: rgb(50, 59, 76);
-    color: whitesmoke;
     border-color: black;
     width: 100%;
     min-width: 140px;
     max-width: 420px;
 }
-.disabled{
+.filters .disabled{
     text-decoration: line-through black 5px;
 }
 @media screen and (max-width: 760px){
