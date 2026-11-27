@@ -1,5 +1,15 @@
 .spell-card{
-    font-family: Verdana, Tahoma, sans-serif
+    font-family: Verdana, Tahoma, sans-serif;
+    width: 28%;
+    min-width: 260px;
+    background-color: var(--color-surface);
+    display: flex;
+    flex-direction: column;
+    padding: 1em;
+    border: solid 2px var(--color-border);
+    border-radius: 1em;
+    margin: 1em 1em;
+    color: var(--color-text-primary);
 }
 .ReactCollapse--collapse {
     transition: height 500ms;
@@ -30,6 +40,7 @@
     overflow-wrap: anywhere;
 }
 .spell-card-subheader-bottom{
+    text-align: justify;
     grid-column: 1 / -1;
     width: 100%;
     display: grid;
@@ -41,21 +52,6 @@
 }
 .spell-card-subheader-divider{
     grid-column: 1 / -1;
-}
-.spell-card{
-    width: 21%;
-    min-width: 260px;
-    background-color: var(--color-surface);
-    display: flex;
-    flex-direction: column;
-    padding: 1em;
-    border: solid 2px var(--color-border);
-    border-radius: 1em;
-    margin: 1em 1em;
-    height: 100%;
-    color: var(--color-text-primary);
-    /* box-shadow: 2px 2px 5px var(--color-border); */
-    transition: 400ms ease-out;
 }
 .description{
     text-align: justify;

@@ -44,7 +44,9 @@ h1{
     font-weight: 600;
 }
 .header button:hover,
-.header button:focus-visible{
+.header button:focus-visible,
+.header a:focus-visible,
+.header a:hover{
     color: var(--color-primary);
     background: transparent;
     border: 0;

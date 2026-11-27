@@ -19,6 +19,7 @@ export default function Main(props){
     const [classSpells, setClassSpells] = React.useState(null);
     const [isClassLoading, setIsClassLoading] = React.useState(false);
     const [classLoadError, setClassLoadError] = React.useState(null);
+    const [filtersVisible, setFiltersVisible] = React.useState(true);
 
     React.useEffect(() => {
         let cancelled = false;
@@ -104,8 +105,8 @@ export default function Main(props){
     ));
 
     return(
-        <div className="container">
-            <p id="anchor"></p>
+        <div className={`container${filtersVisible ? "" : " filters-collapsed"}`}>
+            {/* <p id="anchor"></p> */}
             {props.showOverlay && <SavedSpells
                 spellList={spellSummaries}
                 savedSpells={props.savedSpells}
@@ -116,13 +117,31 @@ export default function Main(props){
                 removePreparedSpell={props.removePreparedSpell}
                 canEditSavedSpells={props.canEditSavedSpells}
             />}
-            <Filter handleClick={setSpellFilter} />
+            <button
+                type="button"
+                className="filter-toggle"
+                aria-expanded={filtersVisible}
+                aria-controls="spell-filters"
+                onClick={() => setFiltersVisible(visible => !visible)}
+            >
+                {filtersVisible ? "Hide filters" : "Show filters"}
+            </button>
+            <aside
+                id="spell-filters"
+                className="filter-sidebar"
+                aria-label="Spell filters"
+                hidden={!filtersVisible}
+            >
+                <Filter handleClick={setSpellFilter} />
+            </aside>
             <SearchBar searched={searched} setSearched={setSearched} />
-            {(isLoading || isClassLoading) && <Loading />}
-            {(loadError || classLoadError) &&
-                <p role="alert">Couldn’t load spells: {(loadError || classLoadError).message}</p>}
-            {!isLoading && !isClassLoading && !loadError && !classLoadError &&
-                (list.length > 0 ? list : <h1>No Results</h1>)}
+            <section className="spell-list">
+                {(isLoading || isClassLoading) && <Loading />}
+                {(loadError || classLoadError) &&
+                    <p role="alert">Couldn’t load spells: {(loadError || classLoadError).message}</p>}
+                {!isLoading && !isClassLoading && !loadError && !classLoadError &&
+                    (list.length > 0 ? list : <h1>No Results</h1>)}
+            </section>
         </div>
     )
 }

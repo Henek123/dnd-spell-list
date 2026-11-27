@@ -67,6 +67,21 @@ test("filters spell summaries by level without changing the source list", async 
   expect(spellList).toHaveLength(2);
 });
 
+test("hides the filter sidebar without hiding the search bar", async () => {
+  renderMain();
+  await screen.findByText("Fireball");
+
+  const searchBar = screen.getByRole("textbox", {name: "Search spells"});
+  fireEvent.click(screen.getByRole("button", {name: "Hide filters"}));
+
+  expect(screen.queryByRole("complementary", {name: "Spell filters"})).not.toBeInTheDocument();
+  expect(searchBar).toBeInTheDocument();
+  expect(screen.getByRole("button", {name: "Show filters"})).toHaveAttribute("aria-expanded", "false");
+
+  fireEvent.click(screen.getByRole("button", {name: "Show filters"}));
+  expect(screen.getByRole("complementary", {name: "Spell filters"})).toBeInTheDocument();
+});
+
 test("removes a saved and prepared spell from a main-list card", async () => {
   const removeSavedSpell = jest.fn();
   const removePreparedSpell = jest.fn();

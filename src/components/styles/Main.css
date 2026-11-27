@@ -1,4 +1,56 @@
 .container{
+    padding: 100px 24px 24px;
+    box-sizing: border-box;
+    display: grid;
+    grid-template-columns: minmax(220px, 280px) minmax(0, 1fr);
+    grid-template-rows: auto 1fr;
+    grid-template-areas:
+        "toggle search"
+        "sidebar spells";
+    column-gap: 24px;
+    row-gap: 16px;
+    align-items: start;
+    background-color: var(--color-bg);
+    align-content: flex-start;
+    min-height: calc(100vh - 40px)
+}
+.filters-collapsed{
+    grid-template-columns: max-content minmax(0, 1fr);
+    grid-template-areas:
+        "toggle search"
+        ". spells";
+}
+.filter-toggle{
+    grid-area: toggle;
+    align-self: center;
+    justify-self: start;
+    padding: 0.55rem 0.85rem;
+    border: 2px solid var(--color-border);
+    border-radius: 5px;
+    background-color: var(--color-surface);
+    color: var(--color-text-primary);
+    cursor: pointer;
+    font: inherit;
+}
+.filter-toggle:hover,
+.filter-toggle:focus-visible{
+    border-color: var(--color-primary);
+    color: var(--color-primary);
+}
+.filter-sidebar{
+    grid-area: sidebar;
+    position: sticky;
+    top: 100px;
+    align-self: start;
+    min-width: 0;
+    width: 100%;
+    box-sizing: border-box;
+    max-height: calc(100vh - 116px);
+    overflow-y: auto;
+    padding: 1em;
+}
+.spell-list{
+    grid-area: spells;
     display: flex;
     flex-direction: row;
     flex-wrap: wrap;
@@ -7,10 +59,40 @@
     align-content: flex-start;
     min-height: calc(100vh - 40px)
 }
+.filters{
+    width: 100%;
+    
+}
+.search-section{
+    grid-area: search;
+}
 body{
     background-color: var(--color-bg);
 }
 .no-scroll{
     overflow-y: hidden;
     background-color: aquamarine;
+}
+@media screen and (max-width: 760px){
+    .container,
+    .filters-collapsed{
+        grid-template-columns: minmax(0, 1fr);
+        grid-template-areas:
+            "toggle"
+            "search"
+            "sidebar"
+            "spells";
+        padding: 96px 16px 16px;
+    }
+    .filter-sidebar{
+        position: static;
+        max-height: none;
+        overflow: visible;
+    }
+    .filters-collapsed{
+        grid-template-areas:
+            "toggle"
+            "search"
+            "spells";
+    }
 }

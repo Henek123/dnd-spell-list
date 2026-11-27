@@ -97,7 +97,7 @@ export default function Spell(props){
     } 
 
     return(
-            <div ref={cardRef} className={`spell-card ${props.saved ? "disable-box-shadow" : ""}`}>
+            <div ref={cardRef} className={`spell-card`}>
                 <div className="spell-card-header">
                     <div>
                         {props.saved && <input
