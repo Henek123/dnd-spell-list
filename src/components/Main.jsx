@@ -78,7 +78,7 @@ export default function Main(props){
             (spellFilter.level === null || spell.level === spellFilter.level) &&
             spell.name.toLowerCase().includes(searched)
         )
-        .sort((first, second) => first.name.localeCompare(second.name));
+        .sort((a, b) => a.level - b.level || a.name.localeCompare(b.name))
 
     React.useEffect(() => {
         document.body.style.overflow = props.showOverlay ? 'hidden' : '';

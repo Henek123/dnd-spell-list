@@ -106,14 +106,14 @@ export default function Spell(props){
                     <span className="spell-level">{level(spellLevel) + " "}</span>
                 </div>
                 <div className="spell-card-subheader">
-                    <span className="spell-school" aria-live="polite">
+                    <div className="spell-school" aria-live="polite">
                         {spell && spell.school
                             ? spell.school.name
                             : loadError
                                 ? "Unavailable"
                                 : "Loading…"}
-                        {spell && spell.ritual && " Ritual"}
-                    </span>
+                        {spell && spell.ritual && " · Ritual"}
+                    </div>
                     <div>
                         {props.savedSpells.includes(spellName) ? 
                             <button
@@ -150,6 +150,21 @@ export default function Spell(props){
                             />
                         </button>
                     </div>
+                    {spell && <>
+                        <hr className="spell-card-subheader-divider"/>
+                        <div className="spell-card-subheader-bottom">
+                            <p><b>Casting Time:</b>
+                                <br/> {spell.casting_time}.
+                            </p>
+                            <p><b>Range:</b>
+                                <br/> {spell.range}.
+                            </p>
+                            <p>
+                                <b>Duration:</b>
+                                <br/> {spell.duration}{!spell.concentration && '.'} {spell.concentration && "Concentration."}
+                            </p>
+                        </div>
+                    </>}
                 </div>
                 <div id={detailsId}>
                 <UnmountClosed isOpened={visibility}>
@@ -164,17 +179,13 @@ export default function Spell(props){
                     </p>}
                     {spell && <>
                         <hr style={{margin: "1em 0"}} />
-                        <p><b>Casting Time:</b> {spell.casting_time}.</p>
-                        <p><b>Range:</b> {spell.range}.</p>
+                        
 
                         {spell.components ? <p><b>Components:</b> {spell.components.map((item, index) =>
                             `${item}${index === spell.components.length - 1 ? '.' : ', '}`
                         )}</p> :
                         <p><b>Components:</b> None</p>}
-
                         <p><b>Materials:</b> {spell.material ? spell.material : "None."}</p>
-                        <p><b>Duration:</b> {spell.duration}{!spell.concentration && '.'} {spell.concentration && "Concentration."}</p>
-
                         {spell.classes && <p style={{marginBottom: "1.5em"}}><b>Classes:</b> {spell.classes.map((item, index) =>
                             `${item.name}${index === spell.classes.length - 1 ? '.' : ', '}`
                         )}</p>}
