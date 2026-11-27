@@ -3,12 +3,12 @@
     flex-direction: row;
     flex-wrap: wrap;
     justify-content: center;
-    background-color: whitesmoke;
+    background-color: var(--color-bg);
     align-content: flex-start;
     min-height: calc(100vh - 40px)
 }
 body{
-    background-color: whitesmoke;
+    background-color: var(--color-bg);
 }
 .no-scroll{
     overflow-y: hidden;

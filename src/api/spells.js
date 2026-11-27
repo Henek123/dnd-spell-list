@@ -64,11 +64,16 @@ function writeCachedSpell(cacheKey, spell) {
   }
 }
 
+export function getCachedSpell(index) {
+  if (!index) return null;
+  return readCachedSpell(`dnd5e-spell-${apiVersion}-v2:${index}`);
+}
+
 export async function getSpell(index) {
   if (!index) throw new Error("A spell index is required.");
 
   const cacheKey = `dnd5e-spell-${apiVersion}-v2:${index}`;
-  const cachedSpell = readCachedSpell(cacheKey);
+  const cachedSpell = getCachedSpell(index);
   if (cachedSpell) return cachedSpell;
   if (spellRequests.has(index)) {
     return spellRequests.get(index);

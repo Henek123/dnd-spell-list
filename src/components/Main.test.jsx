@@ -1,9 +1,10 @@
 import React from "react";
 import { fireEvent, render, screen, waitFor } from "@testing-library/react";
 import Main from "./Main";
-import { getSpells } from "../api/spells";
+import { getCachedSpell, getSpell, getSpells } from "../api/spells";
 
 jest.mock("../api/spells", () => ({
+  getCachedSpell: jest.fn(() => null),
   getSpells: jest.fn(),
   getSpell: jest.fn()
 }));
@@ -13,7 +14,7 @@ const spellList = [
   {index: "mage-hand", name: "Mage Hand", level: 0}
 ];
 
-function renderMain() {
+function renderMain(overrides = {}) {
   return render(
     <Main
       savedSpells={[]}
@@ -25,12 +26,18 @@ function renderMain() {
       showOverlay={false}
       setShowOverlay={jest.fn()}
       canEditSavedSpells={true}
+      {...overrides}
     />
   );
 }
 
 beforeEach(() => {
+  getCachedSpell.mockImplementation(index => {
+    const spell = spellList.find(item => item.index === index);
+    return spell ? {...spell, school: {name: "Evocation"}} : null;
+  });
   getSpells.mockResolvedValue(spellList);
+  getSpell.mockReset();
 });
 
 test("loads spell summaries and filters by search text", async () => {
@@ -58,4 +65,22 @@ test("filters spell summaries by level without changing the source list", async 
   expect(screen.getByText("Fireball")).toBeInTheDocument();
   expect(screen.queryByText("Mage Hand")).not.toBeInTheDocument();
   expect(spellList).toHaveLength(2);
+});
+
+test("removes a saved spell from an expanded main-list card safely", async () => {
+  const removeSavedSpell = jest.fn();
+  const removePreparedSpell = jest.fn();
+
+  renderMain({
+    savedSpells: ["Fireball"],
+    removeSavedSpell,
+    removePreparedSpell
+  });
+
+  await screen.findByText("Fireball");
+  fireEvent.click(screen.getAllByRole("button", {name: "Expand ↓"})[0]);
+  fireEvent.click(await screen.findByRole("button", {name: "Remove from saved"}));
+
+  expect(removeSavedSpell).toHaveBeenCalledWith("Fireball");
+  expect(removePreparedSpell).toHaveBeenCalledWith("Fireball");
 });

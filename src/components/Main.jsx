@@ -96,6 +96,9 @@ export default function Main(props){
             savedSpells={props.savedSpells}
             addSavedSpell={props.addSavedSpell}
             removeSavedSpell={props.removeSavedSpell}
+            preparedSpells={props.preparedSpells}
+            addPreparedSpell={props.addPreparedSpell}
+            removePreparedSpell={props.removePreparedSpell}
             canEditSavedSpells={props.canEditSavedSpells}
         />
     ));
