@@ -60,26 +60,28 @@ test("filters spell summaries by level without changing the source list", async 
   renderMain();
 
   await screen.findByText("Fireball");
-  fireEvent.click(screen.getByRole("button", {name: "Level 3"}));
+  fireEvent.click(screen.getByRole("button", {name: "3"}));
 
   expect(screen.getByText("Fireball")).toBeInTheDocument();
   expect(screen.queryByText("Mage Hand")).not.toBeInTheDocument();
   expect(spellList).toHaveLength(2);
 });
 
-test("removes a saved spell from an expanded main-list card safely", async () => {
+test("removes a saved and prepared spell from a main-list card", async () => {
   const removeSavedSpell = jest.fn();
   const removePreparedSpell = jest.fn();
 
   renderMain({
     savedSpells: ["Fireball"],
+    preparedSpells: ["Fireball"],
     removeSavedSpell,
     removePreparedSpell
   });
 
   await screen.findByText("Fireball");
-  fireEvent.click(screen.getAllByRole("button", {name: "Expand ↓"})[0]);
-  fireEvent.click(await screen.findByRole("button", {name: "Remove from saved"}));
+  fireEvent.click(screen.getByRole("button", {
+    name: "Remove Fireball from saved spells"
+  }));
 
   expect(removeSavedSpell).toHaveBeenCalledWith("Fireball");
   expect(removePreparedSpell).toHaveBeenCalledWith("Fireball");

@@ -141,6 +141,7 @@ export default function Spell(props){
                             className="expander"
                             aria-expanded={visibility}
                             aria-controls={detailsId}
+                            title={visibility ? "Hide spell details" : "Show spell details"}
                             onClick={toggle}
                         >
                             <ChevronDown
