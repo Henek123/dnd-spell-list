@@ -2,13 +2,15 @@
 .filter-class{
     display: flex;
     flex-wrap: wrap;
-    border: solid 2px black;
+    border: solid 2px var(--color-border);
     border-radius: 20px;
-    background-color: rgb(235, 235, 235);
+    background-color: var(--color-surface);
     min-height: 80px;
     max-width: 1700px;
     justify-content: space-around;
     align-items: center;
+    background-color: var(--color-surface);
+    color: var(--color-text-primary);
 }
 .filter-level{
     margin-top: 30px;
@@ -63,8 +65,9 @@
     justify-content: center;
 }
 .clear-btn{
-    background-color: rgb(50, 59, 76);
-    border-color: black;
+    background-color: var(--color-accent-subtle)
+    ;
+    /* border-color: black; */
     width: 100%;
     min-width: 140px;
     max-width: 420px;

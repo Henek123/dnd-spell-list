@@ -4,6 +4,14 @@ import {UnmountClosed} from 'react-collapse';
 import {getCachedSpell, getSpell} from "../api/spells.js"
 import { Bookmark, ChevronDown } from 'lucide-react';
 
+const diceRollRegex = /(\b\d+d\d+\b)/gi;
+
+function formatDescription(text) {
+    return text.split(diceRollRegex).map((part, index) =>
+        index % 2 === 1 ? <b key={index}>{part}</b> : part
+    );
+}
+
 export default function Spell(props){
     const [spell, setSpell] = React.useState(() => getCachedSpell(props.spellIndex));
     const [visibility, setVisibility] = React.useState(false);
@@ -14,7 +22,6 @@ export default function Spell(props){
     const [loadError, setLoadError] = React.useState(null);
     const [retryCount, setRetryCount] = React.useState(0);
     const cardRef = React.useRef(null);
-
     React.useEffect(() => {
         const card = cardRef.current;
         if (!card || typeof window.IntersectionObserver === "undefined") {
@@ -190,11 +197,11 @@ export default function Spell(props){
                             `${item.name}${index === spell.classes.length - 1 ? '.' : ', '}`
                         )}</p>}
 
-                        <div className="description">{spell.desc && spell.desc.map(element => <p key={element}>{element}</p>)}</div>
+                        <div className="description">{spell.desc && spell.desc.map((element, index) => <p key={index}>{formatDescription(element)}</p>)}</div>
                         {spell.higher_level && spell.higher_level.length > 0 && <>
                             <h3>Higher Level:</h3>
                             <hr />
-                            <div className="description">{spell.higher_level.map(element => <p key={element}>{element}</p>)}</div>
+                            <div className="description">{spell.higher_level.map((element, index) => <p key={index}>{formatDescription(element)}</p>)}</div>
                         </>}
                     </>}
                 </UnmountClosed>

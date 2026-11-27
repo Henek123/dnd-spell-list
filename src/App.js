@@ -33,6 +33,7 @@ function App() {
   const [showOverlay, setShowOverlay] = React.useState(false);
   const [savedSpells, setSavedSpells] = React.useState([]);
   const [preparedSpells, setPreparedSpells] = React.useState([]);
+  const [theme, setTheme] = React.useState("light");
 
   React.useEffect(() => onAuthStateChanged(
     auth,
@@ -134,7 +135,7 @@ function App() {
     (!userUID || loadedUserUID === userUID);
 
   return (
-    <>
+    <div data-theme={theme}>
       <Header
         showOverlay={showOverlay}
         toggleOverlay={toggleVisibility}
@@ -142,6 +143,8 @@ function App() {
         setUserUID={setUserUID}
         userUID={userUID}
         authLoading={authLoading}
+        theme={theme}
+        setTheme={setTheme}
       />
       {(authError || cloudDataError) && <p className="app-error" role="alert">
         {authError
@@ -172,7 +175,7 @@ function App() {
         canEditSavedSpells={canEditSavedSpells}
       />
       <Footer />
-    </>
+    </div>
   );
 }
 

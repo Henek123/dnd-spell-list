@@ -16,6 +16,13 @@
 
     /* Borders */
     --color-border: #DED9E8;
+
+    --header-bg: #30283F;
+    --header-text: #FFFFFF;
+    --header-text-secondary: #E5DDF2;
+    --header-icon: #D1C6E5;
+    --header-border: #453B56;
+    --header-active: #B49AEF;
 }
 
 [data-theme="dark"] {
@@ -30,8 +37,8 @@
     --color-surface-secondary: #2C2B40;
 
     /* Text */
-    --color-text-primary: #F1EFF8;
-    --color-text-secondary: #AAA6BC;
+    --color-text-primary: #E5E1EC;
+    --color-text-secondary: #AAA4B8;
 
     /* Borders */
     --color-border: #38374C;
